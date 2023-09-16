@@ -1,0 +1,10 @@
+{
+    "name": "codeway-task",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+        "start:app": "cd app && npm start",
+        "start:app-ui": "cd app-ui && npm run serve",
+        "start": "concurrently \"npm run start:app\" \"npm run start:app-ui\""
+    }    
+}
