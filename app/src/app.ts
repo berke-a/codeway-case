@@ -17,10 +17,13 @@ const db = admin.firestore();
 
 
 
-app.get('/', (req: any, res: any) => {
-  const configurations = getConfigurations();
-  res.send(configurations);
-  res.send('Hello from Node.js with Firebase!');
+app.get('/', async (req: any, res: any) => {
+  try {
+    const configurations = await getConfigurations();
+    res.send(configurations);
+  } catch (error) {
+    res.status(500).send("Error fetching configurations");
+  }
 });
 
 async function getConfigurations() {
@@ -42,6 +45,7 @@ async function getConfigurations() {
 function camelToSnake(str: string) {
   return str.replace(/[A-Z]/g, (c: string) => '_' + c.toLowerCase());
 }
+
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
