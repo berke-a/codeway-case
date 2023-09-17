@@ -20,9 +20,16 @@ const db = admin.firestore();
 app.get('/', async (req: any, res: any) => {
   try {
     const configurations = await getConfigurations();
-    res.send(configurations);
+    res.send({
+      'status': 'success',
+      'data': configurations,
+    });
   } catch (error) {
-    res.status(500).send("Error fetching configurations");
+    console.log(error);
+    res.status(500).send({
+      'status': 'error',
+      'message': 'Error while fetching configurations'
+    });
   }
 });
 
