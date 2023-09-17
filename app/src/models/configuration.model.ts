@@ -3,9 +3,9 @@ export class Configuration {
     value: string;
     type: string;
     description: string;
-    createDate: Date;
+    createDate: string;
 
-    constructor(parameterKey: string, value: string, type: string, description: string, createDate: Date) {
+    constructor(parameterKey: string, value: string, type: string, description: string, createDate: string) {
         this.parameterKey = parameterKey;
         this.value = value;
         this.type = type;
