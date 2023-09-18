@@ -7,18 +7,30 @@
                 </tr>
             </thead>
             <tbody>
+
                 <tr v-for="config in configurations" :key="config.parameterKey">
+
                     <td v-for="(value, key) in config" :key="key">
-                        <input v-if="chosenConfig === config.parameterKey" v-model="config[key]" type="text" />
+                        <select v-if="chosenConfig === config.parameterKey && key === 'type'" v-model="config[key]">
+                            <option value="int">int</option>
+                            <option value="float">float</option>
+                            <option value="string">string</option>
+                        </select>
+                        <input v-else-if="chosenConfig === config.parameterKey && key !== 'createDate'"
+                            v-model="config[key]" type="text" />
                         <span v-else>{{ value }}</span>
                     </td>
+
                     <td>
-                        <button v-if="chosenConfig===config.parameterKey" class="done" @click="editConfig(config)">Done</button>
+                        <button v-if="chosenConfig === config.parameterKey" class="done"
+                            @click="editConfig(config)">Done</button>
                         <button v-else class="edit" @click="makeConfigEditable(config)">Edit</button>
                     </td>
+
                     <td>
                         <button class="delete" @click="deleteConfig(config)">Delete</button>
                     </td>
+
                 </tr>
             </tbody>
         </table>
@@ -51,10 +63,9 @@ export default {
         },
         makeConfigEditable(config) {
             this.chosenConfig = config.parameterKey;
-            console.log("Editing configuration:", config);
         },
         editConfig(config) {
-            console.log("Edited configuration:", config);
+            console.log(config);
             this.chosenConfig = null;
         },
         deleteConfig(config) {
@@ -98,14 +109,17 @@ button {
     color: #FFFF;
     font-weight: bold;
 }
+
 .done {
-    background-image: linear-gradient(45deg, #379237, #1ECD97) ;
+    background-image: linear-gradient(45deg, #379237, #1ECD97);
 }
+
 .edit {
-    background-image: linear-gradient(45deg, #3161F5, #2089F8) ;
+    background-image: linear-gradient(45deg, #3161F5, #2089F8);
 }
+
 .delete {
-    background-image: linear-gradient(45deg, #EF363B, #FB5681) ;
+    background-image: linear-gradient(45deg, #EF363B, #FB5681);
 }
 
 input[type="text"] {
@@ -114,7 +128,7 @@ input[type="text"] {
     border-radius: 5px;
     width: 100%;
     box-sizing: border-box;
-    background-image: linear-gradient(#1E1E2E,#1E1E25);
+    background-image: linear-gradient(#1E1E2E, #1E1E25);
     color: #FFFF;
 }
 
