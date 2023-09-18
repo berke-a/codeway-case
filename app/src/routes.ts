@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import { getConfigurations } from './controllers/configuration.controller';
+import { getConfigurations, updateConfiguration } from './controllers/configuration.controller';
 
 const router = Router();
 
@@ -25,6 +25,24 @@ router.get('/', async (req: any, res: any) => {
         res.status(500).send({
             'status': 'error',
             'message': 'Error while fetching configurations'
+        });
+    }
+});
+
+router.put('/:parameterKey', async (req: any, res: any) => {
+    try {
+        const { parameterKey } = req.params;
+        const updatedConfig  = req.body;
+        const configuration = await updateConfiguration(parameterKey, updatedConfig);
+        res.send({
+            'status': 'success',
+            'data': configuration,
+        });
+    }catch (error) {
+        console.log(error);
+        res.status(500).send({
+            'status': 'error',
+            'message': 'Error while updating configuration'
         });
     }
 });

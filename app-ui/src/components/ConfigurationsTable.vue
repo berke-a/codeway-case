@@ -16,7 +16,7 @@
                             <option value="float">float</option>
                             <option value="string">string</option>
                         </select>
-                        <input v-else-if="chosenConfig === config.parameterKey && key !== 'createDate'"
+                        <input v-else-if="chosenConfig === config.parameterKey && key !== 'createDate' && key !== 'parameterKey'"
                             v-model="config[key]" type="text" />
                         <span v-else>{{ value }}</span>
                     </td>
@@ -64,8 +64,18 @@ export default {
         makeConfigEditable(config) {
             this.chosenConfig = config.parameterKey;
         },
-        editConfig(config) {
-            console.log("Editing configuration:", config);
+        async editConfig(config) {
+            try {
+                const response =await axios.put('http://localhost:3000/' + config.parameterKey, config);
+                console.log(response);
+                
+                const updatedConfigIndex = this.configurations.indexOf(config);
+                this.configurations[updatedConfigIndex].value = config.value;
+                this.configurations[updatedConfigIndex].type = config.type;
+                this.configurations[updatedConfigIndex].description = config.description;
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
             this.chosenConfig = null;
         },
         deleteConfig(config) {
