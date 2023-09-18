@@ -24,7 +24,7 @@ header {
   align-items: center;
 }
 .header-icon {
-  width: 3vw;
+  width: 2rem;
 }
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
