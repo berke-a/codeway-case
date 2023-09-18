@@ -4,11 +4,20 @@ import { getConfigurations } from './controllers/configuration.controller';
 
 const router = Router();
 
+const configurationTableHeaders = [
+    'Parameter Key',
+    'Value',
+    'Type',
+    'Description',
+    'Create Date',
+];
+
 router.get('/', async (req: any, res: any) => {
     try {
         const configurations = await getConfigurations();
         res.send({
             'status': 'success',
+            'headers': configurationTableHeaders,
             'data': configurations,
         });
     } catch (error) {
