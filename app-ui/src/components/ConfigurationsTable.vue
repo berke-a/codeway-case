@@ -54,24 +54,25 @@ export default {
 <style scoped>
 thead {
     color: #778CA3;
-    font-weight: bold;
+    font-size: larger;
+    
 }
 
 tbody {
     color: #FFFF;
+    font-size: small;
 }
 
 th,
 td {
-    padding: 8px 12px;
-    /* 8px top/bottom, 12px left/right */
+    padding: 8px 12px 8px 0px;
 }
 
 table {
     border-collapse: collapse;
     width: 100%;
     margin: 20px 0;
-    /* 20px top/bottom, 0 left/right */
+    text-align: left;
 }
 
 @media only screen and (max-width: 600px) {
