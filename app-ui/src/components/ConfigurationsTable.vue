@@ -65,7 +65,7 @@ export default {
             this.chosenConfig = config.parameterKey;
         },
         editConfig(config) {
-            console.log(config);
+            console.log("Editing configuration:", config);
             this.chosenConfig = null;
         },
         deleteConfig(config) {
@@ -122,6 +122,7 @@ button {
     background-image: linear-gradient(45deg, #EF363B, #FB5681);
 }
 
+select, 
 input[type="text"] {
     border: 1px solid #ddd;
     padding: 5px;
