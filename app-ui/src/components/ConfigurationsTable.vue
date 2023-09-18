@@ -3,20 +3,12 @@
         <table v-if="configurations.length">
             <thead>
                 <tr>
-                    <th>Parameter Key</th>
-                    <th>Value</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                    <th>Create Date</th>
+                    <th v-for="header in headers" :key="header">{{ header }}</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="config in configurations" :key="config.id">
-                    <td>{{ config.parameterKey }}</td>
-                    <td>{{ config.value }}</td>
-                    <td>{{ config.type }}</td>
-                    <td>{{ config.description }}</td>
-                    <td>{{ config.createDate }}</td>
+                <tr v-for="config in configurations" :key="config.parameterKey">
+                    <td v-for="(value, key) in config" :key="key">{{ value }}</td>
                 </tr>
             </tbody>
         </table>
@@ -31,6 +23,7 @@ export default {
     name: 'ConfigurationsTable',
     data() {
         return {
+            headers: [],
             configurations: []
         };
     },
@@ -39,6 +32,7 @@ export default {
             try {
                 const response = await axios.get('http://localhost:3000/');
                 console.log(response);
+                this.headers = response.data.headers;
                 this.configurations = response.data.data;
             } catch (error) {
                 console.error("An error occurred:", error);
