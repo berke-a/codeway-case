@@ -10,7 +10,8 @@
                 <tr v-for="config in configurations" :key="config.parameterKey">
                     <td v-for="(value, key) in config" :key="key">{{ value }}</td>
                     <td>
-                        <button class="edit" @click="editConfig(config)">Edit</button>
+                        <button v-if="editHeader===config.parameterKey" class="done" @click="editConfig(config)">Done</button>
+                        <button v-else class="edit" @click="makeConfigEditable(config)">Edit</button>
                     </td>
                     <td>
                         <button class="delete" @click="deleteConfig(config)">Delete</button>
@@ -30,7 +31,8 @@ export default {
     data() {
         return {
             headers: [],
-            configurations: []
+            configurations: [],
+            editHeader: null
         };
     },
     methods: {
@@ -44,8 +46,13 @@ export default {
                 console.error("An error occurred:", error);
             }
         },
-        editConfig(config) {
+        makeConfigEditable(config) {
+            this.editHeader = config.parameterKey;
             console.log("Editing configuration:", config);
+        },
+        editConfig(config) {
+            console.log("Edited configuration:", config);
+            this.editHeader = null;
         },
         deleteConfig(config) {
             console.log("Deleting configuration:", config);
@@ -88,11 +95,12 @@ button {
     color: #FFFF;
     font-weight: bold;
 }
-
+.done {
+    background-image: linear-gradient(45deg, #379237, #82CD47) ;
+}
 .edit {
     background-image: linear-gradient(45deg, #3161F5, #2089F8) ;
 }
-
 .delete {
     background-image: linear-gradient(45deg, #EF363B, #FB5681) ;
 }
