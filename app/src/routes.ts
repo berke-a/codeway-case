@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import { getConfigurations, updateConfiguration } from './controllers/configuration.controller';
+import { getConfigurations, updateConfiguration, deleteConfiguration } from './controllers/configuration.controller';
 
 const router = Router();
 
@@ -43,6 +43,23 @@ router.put('/:parameterKey', async (req: any, res: any) => {
         res.status(500).send({
             'status': 'error',
             'message': 'Error while updating configuration'
+        });
+    }
+});
+
+router.delete('/:parameterKey', async (req: any, res: any) => {
+    try {
+        const { parameterKey } = req.params;
+        await deleteConfiguration(parameterKey);
+        res.send({
+            'status': 'success',
+            'message': 'Configuration deleted successfully',
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            'status': 'error',
+            'message': 'Error while deleting configuration'
         });
     }
 });

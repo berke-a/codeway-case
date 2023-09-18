@@ -30,3 +30,9 @@ export async function updateConfiguration(parameterKey: string, updatedConfig: a
     await db.collection('Configurations').doc(parameterKey).update(updatedConfig);
     return updatedConfig;
 }
+
+export async function deleteConfiguration(parameterKey: string) {
+    parameterKey = snakeToCamel(parameterKey);
+    await db.collection('Configurations').doc(parameterKey).delete();
+    return;
+}

@@ -78,8 +78,14 @@ export default {
             }
             this.chosenConfig = null;
         },
-        deleteConfig(config) {
-            console.log("Deleting configuration:", config);
+        async deleteConfig(config) {
+            try {
+                const response = await axios.delete('http://localhost:3000/' + config.parameterKey);
+                console.log(response);
+                this.configurations = this.configurations.filter(c => c.parameterKey !== config.parameterKey);
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
         }
     },
     mounted() {
