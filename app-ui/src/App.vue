@@ -1,7 +1,4 @@
 <template>
-  <header>
-    <img src="./assets/icon.png" alt="App Icon" class="header-icon">
-  </header>
   <router-view/>
 </template>
 
@@ -16,15 +13,6 @@ export default {
 
 <style>
 body { margin: 0 !important; }
-header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 20px;
-}
-.header-icon {
-  width: 2rem;
-}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

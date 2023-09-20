@@ -1,4 +1,7 @@
 <template>
+    <header>
+        <img src="../assets/icon.png" alt="App Icon" class="header-icon">    
+    </header>
     <div>
         <table v-if="configurations.length">
             <thead>
@@ -95,6 +98,16 @@ export default {
 </script>
   
 <style scoped>
+header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.header-icon {
+  width: 2rem;
+}
+
 table {
     border-collapse: collapse;
     width: 100%;
