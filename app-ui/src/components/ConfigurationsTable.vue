@@ -249,14 +249,13 @@ button {
 }
 
 .json {
-    background-image: linear-gradient(45deg, #379237, #1ECD97);
+    background-image: linear-gradient(45deg, #3161F5, #2089F8);
     margin-left: 0;
 }
 
 select,
 input[type="text"] {
-    border: 1px solid #ddd;
-    padding: 5px;
+    border: 0.5px solid #ddd;
     border-radius: 5px;
     width: 100%;
     box-sizing: border-box;
