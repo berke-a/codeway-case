@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import LoginComponent from '@/components/LoginComponent.vue';
 import ConfigurationsTable from '@/components/ConfigurationsTable.vue';
-import store from './store';
+import { auth } from './firebaseConfig';
 
 const routes = [
   { path: '/login', component: LoginComponent },
@@ -14,11 +14,16 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresAuth) && !store.getters.isAuthenticated) {
-    next('/login');
-  } else {
-    next();
-  }
-});
-
-export default router;
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          next();
+        } else {
+          next('/login');
+        }
+      });
+    } else {
+      next();
+    }
+  });
+  export default router;
