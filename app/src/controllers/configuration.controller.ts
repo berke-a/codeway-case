@@ -39,3 +39,13 @@ export async function deleteConfiguration(parameterKey: string) {
     await db.collection('Configurations').doc(parameterKey).delete();
     return;
 }
+
+export async function createJsonFormat() {
+    const db = admin.firestore();
+    const snapshot = await db.collection('Configurations').get();
+    const configurations: any = {};
+    snapshot.forEach((doc: any) => {
+        configurations[doc.id] = doc.data().value;
+    });
+    return configurations;
+}

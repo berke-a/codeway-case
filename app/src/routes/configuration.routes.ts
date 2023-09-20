@@ -1,6 +1,6 @@
 
 import { Router } from 'express';
-import { getConfigurations, updateConfiguration, deleteConfiguration } from '../controllers/configuration.controller';
+import { getConfigurations, updateConfiguration, deleteConfiguration, createJsonFormat } from '../controllers/configuration.controller';
 import checkAuth from '../middlewares';
 
 const configurationRouter = Router();
@@ -21,6 +21,22 @@ configurationRouter.get('/', async (req: any, res: any) => {
         res.send({
             'status': 'success',
             'headers': configurationTableHeaders,
+            'data': configurations,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            'status': 'error',
+            'message': 'Error while fetching configurations'
+        });
+    }
+});
+
+configurationRouter.get('/json', async (req: any, res: any) => {
+    try {
+        const configurations = await createJsonFormat();
+        res.send({
+            'status': 'success',
             'data': configurations,
         });
     } catch (error) {

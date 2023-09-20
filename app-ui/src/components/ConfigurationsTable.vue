@@ -13,41 +13,49 @@
 
     </header>
     <div>
-        <table v-if="configurations.length">
-            <thead>
-                <tr>
-                    <th v-for="header in headers" :key="header">{{ header }}</th>
-                </tr>
-            </thead>
-            <tbody>
+        <div v-if="configurations.length" class="configurations-table">
+            <table>
+                <thead>
+                    <tr>
+                        <th v-for="header in headers" :key="header">{{ header }}</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                <tr v-for="config in configurations" :key="config.parameterKey">
+                    <tr v-for="config in configurations" :key="config.parameterKey">
 
-                    <td v-for="(value, key) in config" :key="key">
-                        <select v-if="chosenConfig === config.parameterKey && key === 'type'" v-model="config[key]">
-                            <option value="int">int</option>
-                            <option value="float">float</option>
-                            <option value="string">string</option>
-                        </select>
-                        <input
-                            v-else-if="chosenConfig === config.parameterKey && key !== 'createDate' && key !== 'parameterKey'"
-                            v-model="config[key]" type="text" />
-                        <span v-else>{{ value }}</span>
-                    </td>
+                        <td v-for="(value, key) in config" :key="key">
+                            <select v-if="chosenConfig === config.parameterKey && key === 'type'" v-model="config[key]">
+                                <option value="int">int</option>
+                                <option value="float">float</option>
+                                <option value="string">string</option>
+                            </select>
+                            <input
+                                v-else-if="chosenConfig === config.parameterKey && key !== 'createDate' && key !== 'parameterKey'"
+                                v-model="config[key]" type="text" />
+                            <span v-else>{{ value }}</span>
+                        </td>
 
-                    <td>
-                        <button v-if="chosenConfig === config.parameterKey" class="done"
-                            @click="editConfig(config)">Done</button>
-                        <button v-else class="edit" @click="makeConfigEditable(config)">Edit</button>
-                    </td>
+                        <td>
+                            <button v-if="chosenConfig === config.parameterKey" class="done"
+                                @click="editConfig(config)">Done</button>
+                            <button v-else class="edit" @click="makeConfigEditable(config)">Edit</button>
+                        </td>
 
-                    <td>
-                        <button class="delete" @click="deleteConfig(config)">Delete</button>
-                    </td>
+                        <td>
+                            <button class="delete" @click="deleteConfig(config)">Delete</button>
+                        </td>
 
-                </tr>
-            </tbody>
-        </table>
+                    </tr>
+                </tbody>
+            </table>
+            <button @click="fetchJson" class="json">
+                Preview JSON file
+            </button>
+            <div v-if="showJson" class="json-content">
+                <pre><code class="language-json">{{ json }}</code></pre>
+            </div>
+        </div>
         <p v-else>Loading configurations...</p>
     </div>
 </template>
@@ -63,7 +71,9 @@ export default {
             headers: [],
             configurations: [],
             chosenConfig: null,
-            showUserDetails: false
+            showUserDetails: false,
+            json: '',
+            showJson: false
         };
     },
     methods: {
@@ -93,7 +103,6 @@ export default {
                     }
                 });
                 console.log(response);
-
                 const updatedConfigIndex = this.configurations.indexOf(config);
                 this.configurations[updatedConfigIndex].value = config.value;
                 this.configurations[updatedConfigIndex].type = config.type;
@@ -112,6 +121,22 @@ export default {
                 });
                 console.log(response);
                 this.configurations = this.configurations.filter(c => c.parameterKey !== config.parameterKey);
+            } catch (error) {
+                console.error("An error occurred:", error);
+            }
+        },
+        async fetchJson() {
+            this.showJson = this.showJson ? false : true;
+            if (!this.showJson) return;
+
+            try {
+                const response = await axios.get('http://localhost:3000/configurations/json', {
+                    headers: {
+                        'Authorization': 'Bearer ' + store.getters.token
+                    }
+                });
+                console.log(response);
+                this.json = JSON.stringify(response.data.data, null, 4);
             } catch (error) {
                 console.error("An error occurred:", error);
             }
@@ -157,7 +182,7 @@ header {
     right: 0;
     box-shadow: rgba(255, 255, 255, 0.3) 0 2px 10px;
     background-color: white;
-    border: 1px solid #ccc;
+    border: 1px solid #FFFF;
     border-radius: 5px;
     padding: 10px 20px;
     background-image: linear-gradient(#1E1E2E, #1E1E25);
@@ -213,6 +238,11 @@ button {
     background-image: linear-gradient(45deg, #EF363B, #FB5681);
 }
 
+.json {
+    background-image: linear-gradient(45deg, #379237, #1ECD97);
+    margin-left: 0;
+}
+
 select,
 input[type="text"] {
     border: 1px solid #ddd;
@@ -222,6 +252,15 @@ input[type="text"] {
     box-sizing: border-box;
     background-image: linear-gradient(#1E1E2E, #1E1E25);
     color: #FFFF;
+}
+
+.json-content {
+    margin-top: 20px;
+    border: 1px solid #FFFF;
+    border-radius: 5px;
+    color: white;
+    padding: 10px 20px;
+    width: fit-content;
 }
 
 
