@@ -43,6 +43,7 @@
 </template>
   
 <script>
+import store from '@/store';
 import axios from 'axios';
 
 export default {
@@ -57,7 +58,11 @@ export default {
     methods: {
         async fetchConfigurations() {
             try {
-                const response = await axios.get('http://localhost:3000/configurations');
+                const response = await axios.get('http://localhost:3000/configurations', {
+                    headers: {
+                        'Authorization': 'Bearer ' + store.getters.token
+                    }
+                });
                 console.log(response);
                 this.headers = response.data.headers;
                 this.configurations = response.data.data;
@@ -70,7 +75,12 @@ export default {
         },
         async editConfig(config) {
             try {
-                const response = await axios.put('http://localhost:3000/configurations/' + config.parameterKey, config);
+                const response = await axios.put('http://localhost:3000/configurations/' + config.parameterKey, config, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + store.getters.token
+                    }
+                });
                 console.log(response);
 
                 const updatedConfigIndex = this.configurations.indexOf(config);

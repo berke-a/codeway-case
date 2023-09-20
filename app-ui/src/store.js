@@ -1,8 +1,10 @@
 import { createStore } from 'vuex';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './firebaseConfig';
+import createPersistedState from 'vuex-persistedstate'
 
 export default createStore({
+  plugins: [createPersistedState()],
   state: {
     token: null,
     user: null
@@ -35,6 +37,6 @@ export default createStore({
     }
   },
   getters: {
-    isAuthenticated: state => !!state.token
+    token: state => state.token
   }
 });
