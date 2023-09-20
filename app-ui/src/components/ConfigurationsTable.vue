@@ -77,7 +77,6 @@ export default {
             try {
                 const response = await axios.put('http://localhost:3000/configurations/' + config.parameterKey, config, {
                     headers: {
-                        'Content-Type': 'application/json',
                         'Authorization': 'Bearer ' + store.getters.token
                     }
                 });
@@ -94,7 +93,11 @@ export default {
         },
         async deleteConfig(config) {
             try {
-                const response = await axios.delete('http://localhost:3000/configurations/' + config.parameterKey);
+                const response = await axios.delete('http://localhost:3000/configurations/' + config.parameterKey, {
+                    headers: {
+                        'Authorization': 'Bearer ' + store.getters.token
+                    }
+                });
                 console.log(response);
                 this.configurations = this.configurations.filter(c => c.parameterKey !== config.parameterKey);
             } catch (error) {
