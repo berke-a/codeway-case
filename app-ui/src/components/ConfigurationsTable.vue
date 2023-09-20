@@ -155,6 +155,7 @@ header {
     position: absolute;
     top: 100%;
     right: 0;
+    box-shadow: rgba(255, 255, 255, 0.3) 0 2px 10px;
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
