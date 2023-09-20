@@ -1,8 +1,11 @@
 
 import { Router } from 'express';
 import { getConfigurations, updateConfiguration, deleteConfiguration } from '../controllers/configuration.controller';
+import checkAuth from '../middlewares';
 
 const configurationRouter = Router();
+
+configurationRouter.use(checkAuth)
 
 const configurationTableHeaders = [
     'Parameter Key',
@@ -32,13 +35,13 @@ configurationRouter.get('/', async (req: any, res: any) => {
 configurationRouter.put('/:parameterKey', async (req: any, res: any) => {
     try {
         const { parameterKey } = req.params;
-        const updatedConfig  = req.body;
+        const updatedConfig = req.body;
         const configuration = await updateConfiguration(parameterKey, updatedConfig);
         res.send({
             'status': 'success',
             'data': configuration,
         });
-    }catch (error) {
+    } catch (error) {
         console.log(error);
         res.status(500).send({
             'status': 'error',
