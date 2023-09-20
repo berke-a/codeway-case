@@ -2,16 +2,14 @@
   <header>
     <img src="./assets/icon.png" alt="App Icon" class="header-icon">
   </header>
-  <ConfigurationsTable/>
+  <router-view/>
 </template>
 
 <script>
-import ConfigurationsTable from './components/ConfigurationsTable.vue'
 
 export default {
   name: 'App',
   components: {
-    ConfigurationsTable
   }
 }
 </script>
