@@ -222,7 +222,11 @@ tbody {
 
 th,
 td {
-    padding: 8px 0px;
+    padding: 8px 8px;
+}
+
+td {
+    vertical-align: middle;
 }
 
 button {
@@ -257,6 +261,7 @@ select,
 input[type="text"] {
     border: 0.5px solid #ddd;
     border-radius: 5px;
+    padding: 0px 5px;
     width: 100%;
     box-sizing: border-box;
     background-image: linear-gradient(#1E1E2E, #1E1E25);
