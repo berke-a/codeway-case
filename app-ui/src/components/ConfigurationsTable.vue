@@ -56,7 +56,7 @@ export default {
     methods: {
         async fetchConfigurations() {
             try {
-                const response = await axios.get('http://localhost:3000/');
+                const response = await axios.get('http://localhost:3000/configurations');
                 console.log(response);
                 this.headers = response.data.headers;
                 this.configurations = response.data.data;
@@ -69,7 +69,7 @@ export default {
         },
         async editConfig(config) {
             try {
-                const response =await axios.put('http://localhost:3000/' + config.parameterKey, config);
+                const response =await axios.put('http://localhost:3000/configurations/' + config.parameterKey, config);
                 console.log(response);
                 
                 const updatedConfigIndex = this.configurations.indexOf(config);
@@ -83,7 +83,7 @@ export default {
         },
         async deleteConfig(config) {
             try {
-                const response = await axios.delete('http://localhost:3000/' + config.parameterKey);
+                const response = await axios.delete('http://localhost:3000/configurations/' + config.parameterKey);
                 console.log(response);
                 this.configurations = this.configurations.filter(c => c.parameterKey !== config.parameterKey);
             } catch (error) {
