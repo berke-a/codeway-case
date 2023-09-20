@@ -63,6 +63,9 @@
 <script>
 import store from '@/store';
 import axios from 'axios';
+import Prism from 'prismjs';
+import 'prismjs/components/prism-json';
+import 'prismjs/themes/prism-okaidia.css';
 
 export default {
     name: 'ConfigurationsTable',
@@ -107,6 +110,8 @@ export default {
                 this.configurations[updatedConfigIndex].value = config.value;
                 this.configurations[updatedConfigIndex].type = config.type;
                 this.configurations[updatedConfigIndex].description = config.description;
+
+                await this.fetchJson(true);
             } catch (error) {
                 console.error("An error occurred:", error);
             }
@@ -125,9 +130,11 @@ export default {
                 console.error("An error occurred:", error);
             }
         },
-        async fetchJson() {
-            this.showJson = this.showJson ? false : true;
-            if (!this.showJson) return;
+        async fetchJson(calledFromEdit = false) {
+            if (!calledFromEdit || typeof calledFromEdit !== 'boolean') {
+                this.showJson = this.showJson ? false : true;
+                if (!this.showJson) return;
+            }
 
             try {
                 const response = await axios.get('http://localhost:3000/configurations/json', {
@@ -137,6 +144,9 @@ export default {
                 });
                 console.log(response);
                 this.json = JSON.stringify(response.data.data, null, 4);
+                this.$nextTick(() => {
+                    Prism.highlightAll();
+                });
             } catch (error) {
                 console.error("An error occurred:", error);
             }
@@ -258,7 +268,6 @@ input[type="text"] {
     margin-top: 20px;
     border: 1px solid #FFFF;
     border-radius: 5px;
-    color: white;
     padding: 10px 20px;
     width: fit-content;
 }
