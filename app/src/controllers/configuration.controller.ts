@@ -45,7 +45,22 @@ export async function createJsonFormat() {
     const snapshot = await db.collection('Configurations').get();
     const configurations: any = {};
     snapshot.forEach((doc: any) => {
-        configurations[doc.id] = doc.data().value;
+        const data = doc.data();
+
+        switch (data.type) {
+            case 'int':
+                configurations[doc.id] = parseInt(data.value, 10);
+                break;
+            case 'float':
+                configurations[doc.id] = parseFloat(data.value);
+                break;
+            case 'string':
+                configurations[doc.id] = data.value;
+                break;
+            default:
+                configurations[doc.id] = data.value;
+        }
     });
+
     return configurations;
 }
