@@ -1,8 +1,8 @@
 
 import { Router } from 'express';
-import { getConfigurations, updateConfiguration, deleteConfiguration } from './controllers/configuration.controller';
+import { getConfigurations, updateConfiguration, deleteConfiguration } from '../controllers/configuration.controller';
 
-const router = Router();
+const configurationRouter = Router();
 
 const configurationTableHeaders = [
     'Parameter Key',
@@ -12,7 +12,7 @@ const configurationTableHeaders = [
     'Create Date',
 ];
 
-router.get('/', async (req: any, res: any) => {
+configurationRouter.get('/', async (req: any, res: any) => {
     try {
         const configurations = await getConfigurations();
         res.send({
@@ -29,7 +29,7 @@ router.get('/', async (req: any, res: any) => {
     }
 });
 
-router.put('/:parameterKey', async (req: any, res: any) => {
+configurationRouter.put('/:parameterKey', async (req: any, res: any) => {
     try {
         const { parameterKey } = req.params;
         const updatedConfig  = req.body;
@@ -47,7 +47,7 @@ router.put('/:parameterKey', async (req: any, res: any) => {
     }
 });
 
-router.delete('/:parameterKey', async (req: any, res: any) => {
+configurationRouter.delete('/:parameterKey', async (req: any, res: any) => {
     try {
         const { parameterKey } = req.params;
         await deleteConfiguration(parameterKey);
@@ -64,4 +64,4 @@ router.delete('/:parameterKey', async (req: any, res: any) => {
     }
 });
 
-export default router;
+export default configurationRouter;
