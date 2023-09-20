@@ -24,7 +24,7 @@ export default createStore({
         commit('SET_TOKEN', token);
         return {success: true}
       } catch (error) {
-        console.log('error', error)
+        console.error(error);
         return { success: false, message: error.message };
       }
     },
