@@ -1,6 +1,7 @@
 <template>
     <header>
         <img src="../assets/icon.png" alt="App Icon" class="header-icon">
+        <img src="../assets/user.png" alt="User Icon" class="header-icon user">
     </header>
     <div>
         <table v-if="configurations.length">
@@ -114,13 +115,19 @@ export default {
 <style scoped>
 header {
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
 
 .header-icon {
     width: 2rem;
+}
+
+.user {
+    border: 1px solid #FFFF;
+    padding: 5px;
+    border-radius: 50%;
 }
 
 table {
@@ -143,10 +150,12 @@ tbody {
 
 th,
 td {
-    padding: 8px 12px 8px 0px;
+    padding: 8px 0px;
 }
 
 button {
+    display: block;
+    margin-left: auto;
     padding: 5px 10px;
     border-radius: 5px;
     border: none;
