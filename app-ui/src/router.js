@@ -4,26 +4,26 @@ import ConfigurationsTable from '@/components/ConfigurationsTable.vue';
 import { auth } from './firebaseConfig';
 
 const routes = [
-  { path: '/login', component: LoginComponent },
-  { path: '/configurations', component: ConfigurationsTable, meta: { requiresAuth: true } }
+    { path: '/login', component: LoginComponent },
+    { path: '/configurations', component: ConfigurationsTable, meta: { requiresAuth: true } }
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes
+    history: createWebHistory(),
+    routes
 });
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          next();
-        } else {
-          next('/login');
-        }
-      });
+        auth.onAuthStateChanged(user => {
+            if (user) {t
+                next();
+            } else {
+                next('/login');
+            }
+        });
     } else {
-      next();
+        next();
     }
-  });
-  export default router;
+});
+export default router;
