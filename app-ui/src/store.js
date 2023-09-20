@@ -1,24 +1,37 @@
-import {createStore} from 'vuex';
-import axios from 'axios';
+import { createStore } from 'vuex';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from './firebaseConfig';
 
 export default createStore({
   state: {
     token: null,
+    user: null
   },
   mutations: {
+    SET_USER(state, user) {
+      state.user = user;
+    },
     SET_TOKEN(state, token) {
       state.token = token;
     }
   },
   actions: {
-    async login({ commit }, { email, password }) {
+    async login({commit}, {email, password}) {
       try {
-        const response = await axios.post('http://localhost:3000/login', { email, password });
-        commit('SET_TOKEN', response.data.token);
-        return { success: true };
+        await signInWithEmailAndPassword(auth, email, password)
+        const token = await auth.currentUser.getIdToken();
+        commit('SET_USER', auth.currentUser);
+        commit('SET_TOKEN', token);
+        return {success: true}
       } catch (error) {
-        return { success: false, message: error.response.data.message };
+        console.log('error', error)
+        return { success: false, message: error.message };
       }
+    },
+    async logout({ commit }) {
+      await auth.signOut();
+      commit('SET_TOKEN', null);
+      commit('SET_USER', null);
     }
   },
   getters: {

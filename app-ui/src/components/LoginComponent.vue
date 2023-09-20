@@ -24,7 +24,7 @@
     methods: {
       ...mapActions(['login']),
       async doLogin() {
-        const result = await this.login({ email: this.email, password: this.password });
+        const result = await this.login({email: this.email, password: this.password});
         if (result.success) {
           this.$router.push({ path: '/configurations' });
         } else {
