@@ -16,13 +16,13 @@ export default createStore({
     }
   },
   actions: {
-    async login({commit}, {email, password}) {
+    async login({ commit }, { email, password }) {
       try {
         await signInWithEmailAndPassword(auth, email, password)
         const token = await auth.currentUser.getIdToken();
         commit('SET_USER', auth.currentUser);
         commit('SET_TOKEN', token);
-        return {success: true}
+        return { success: true }
       } catch (error) {
         console.error(error);
         return { success: false, message: error.message };

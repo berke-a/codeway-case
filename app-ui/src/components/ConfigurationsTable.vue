@@ -1,6 +1,6 @@
 <template>
     <header>
-        <img src="../assets/icon.png" alt="App Icon" class="header-icon">    
+        <img src="../assets/icon.png" alt="App Icon" class="header-icon">
     </header>
     <div>
         <table v-if="configurations.length">
@@ -19,7 +19,8 @@
                             <option value="float">float</option>
                             <option value="string">string</option>
                         </select>
-                        <input v-else-if="chosenConfig === config.parameterKey && key !== 'createDate' && key !== 'parameterKey'"
+                        <input
+                            v-else-if="chosenConfig === config.parameterKey && key !== 'createDate' && key !== 'parameterKey'"
                             v-model="config[key]" type="text" />
                         <span v-else>{{ value }}</span>
                     </td>
@@ -69,9 +70,9 @@ export default {
         },
         async editConfig(config) {
             try {
-                const response =await axios.put('http://localhost:3000/configurations/' + config.parameterKey, config);
+                const response = await axios.put('http://localhost:3000/configurations/' + config.parameterKey, config);
                 console.log(response);
-                
+
                 const updatedConfigIndex = this.configurations.indexOf(config);
                 this.configurations[updatedConfigIndex].value = config.value;
                 this.configurations[updatedConfigIndex].type = config.type;
@@ -99,13 +100,14 @@ export default {
   
 <style scoped>
 header {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 20px;
 }
+
 .header-icon {
-  width: 2rem;
+    width: 2rem;
 }
 
 table {
@@ -151,7 +153,7 @@ button {
     background-image: linear-gradient(45deg, #EF363B, #FB5681);
 }
 
-select, 
+select,
 input[type="text"] {
     border: 1px solid #ddd;
     padding: 5px;
