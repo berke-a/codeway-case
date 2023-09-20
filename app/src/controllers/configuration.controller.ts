@@ -1,9 +1,10 @@
-import db from '../db';
+import admin from '../firebaseConfig';
 import { Configuration } from '../models/configuration.model';
 import { camelToSnake, snakeToCamel, toHumanReadableFormat } from '../utils';
 
 export async function getConfigurations() {
     const configurationArray: Configuration[] = [];
+    const db = admin.firestore();
     const snapshot = await db.collection('Configurations').get();
     snapshot.forEach((doc: any) => {
         const configuration = new Configuration(
@@ -19,6 +20,7 @@ export async function getConfigurations() {
 }
 
 export async function updateConfiguration(parameterKey: string, updatedConfig: any) {
+    const db = admin.firestore();
     parameterKey = snakeToCamel(parameterKey);
     const configuration = await db.collection('Configurations').doc(parameterKey).get();
     if (!configuration.exists) {
@@ -32,6 +34,7 @@ export async function updateConfiguration(parameterKey: string, updatedConfig: a
 }
 
 export async function deleteConfiguration(parameterKey: string) {
+    const db = admin.firestore();
     parameterKey = snakeToCamel(parameterKey);
     await db.collection('Configurations').doc(parameterKey).delete();
     return;

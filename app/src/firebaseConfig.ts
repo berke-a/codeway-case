@@ -6,6 +6,4 @@ admin.initializeApp({
   databaseURL: 'https://codeway-task-33a0d.firebaseio.com'
 });
 
-const db = admin.firestore();
-
-export default db;
+export default admin;
