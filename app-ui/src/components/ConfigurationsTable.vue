@@ -1,7 +1,16 @@
 <template>
     <header>
         <img src="../assets/icon.png" alt="App Icon" class="header-icon">
-        <img src="../assets/user.png" alt="User Icon" class="header-icon user">
+
+        <div class="user-container" @mouseenter="showUserDetails = true" @mouseleave="showUserDetails = false">
+            <img src="../assets/user.png" alt="User Icon" class="header-icon user-icon">
+
+            <div v-if="showUserDetails" class="user-details">
+                <p>{{ $store.getters.user.email }}</p>
+                <button class="delete" @click="logout">Logout</button>
+            </div>
+        </div>
+
     </header>
     <div>
         <table v-if="configurations.length">
@@ -53,11 +62,13 @@ export default {
         return {
             headers: [],
             configurations: [],
-            chosenConfig: null
+            chosenConfig: null,
+            showUserDetails: false
         };
     },
     methods: {
         async fetchConfigurations() {
+            console.log(store.getters.user)
             try {
                 const response = await axios.get('http://localhost:3000/configurations', {
                     headers: {
@@ -104,6 +115,10 @@ export default {
             } catch (error) {
                 console.error("An error occurred:", error);
             }
+        },
+        logout() {
+            this.$store.dispatch('logout');
+            this.$router.push({ path: '/login' })
         }
     },
     mounted() {
@@ -124,11 +139,32 @@ header {
     width: 2rem;
 }
 
-.user {
+.user-icon {
     border: 1px solid #FFFF;
     padding: 5px;
     border-radius: 50%;
+    cursor: pointer;
 }
+
+.user-container {
+    position: relative;
+    display: inline-block;
+}
+
+.user-details {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px 20px;
+    background-image: linear-gradient(#1E1E2E, #1E1E25);
+    color: #FFFF;
+    z-index: 1;
+    white-space: nowrap;
+}
+
 
 table {
     border-collapse: collapse;
@@ -161,6 +197,7 @@ button {
     border: none;
     color: #FFFF;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .done {
