@@ -1,7 +1,8 @@
 
 import { Router } from 'express';
-import { getConfigurations, updateConfiguration, deleteConfiguration, createJsonFormat } from '../controllers/configuration.controller';
+import { getConfigurations, updateConfiguration, deleteConfiguration, createJsonFormat, createConfiguration } from '../controllers/configuration.controller';
 import checkAuth from '../middlewares';
+import { toHumanReadableFormat } from '../utils';
 
 const configurationRouter = Router();
 
@@ -62,6 +63,23 @@ configurationRouter.put('/:parameterKey', async (req: any, res: any) => {
         res.status(500).send({
             'status': 'error',
             'message': 'Error while updating configuration'
+        });
+    }
+});
+
+configurationRouter.post('/', async (req: any, res: any) => {
+    try {
+        const newConfiguration = await createConfiguration(req.body);
+        console.log(newConfiguration)
+        res.send({
+            'status': 'success',
+            'data': newConfiguration,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            'status': 'error',
+            'message': 'Error while creating configuration'
         });
     }
 });

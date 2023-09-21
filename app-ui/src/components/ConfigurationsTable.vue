@@ -47,6 +47,33 @@
                         </td>
 
                     </tr>
+
+                    <tr>
+                        <td>
+                            <input v-model="newConfig.parameterKey" type="text" />
+                        </td>
+                        <td>
+                            <input v-model="newConfig.value" type="text" />
+                        </td>
+                        <td>
+                            <select v-model="newConfig.type">
+                                <option value="int">int</option>
+                                <option value="float">float</option>
+                                <option value="string">string</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input v-model="newConfig.description" type="text" />
+                        </td>
+                        <td>
+                            <span> {{ currentDate }} </span>
+                        </td>
+                        <td>
+                            <button class="done" @click="addConfig(newConfig)">Add</button>
+                        </td>
+
+                    </tr>
+
                 </tbody>
             </table>
             <button @click="fetchJson" class="json">
@@ -76,7 +103,14 @@ export default {
             chosenConfig: null,
             showUserDetails: false,
             json: '',
-            showJson: false
+            showJson: false,
+            currentDate: this.toHumanReadableFormat(new Date()),
+            newConfig: {
+                parameterKey: '',
+                value: '',
+                type: '',
+                description: ''
+            }
         };
     },
     methods: {
@@ -151,9 +185,43 @@ export default {
                 console.error("An error occurred:", error);
             }
         },
+        async addConfig(newConfig) {
+            if (!newConfig.parameterKey || !newConfig.value || !newConfig.type || !newConfig.description) {
+                console.error("All fields are required!");
+                return;
+            }
+
+            if (!this.isStringSnakeCase(newConfig.parameterKey)) {
+                console.error("Parameter key must be in snake case!");
+                return;
+            }
+
+            try {
+                const response = await axios.post('http://localhost:3000/configurations/', newConfig, {
+                    headers: {
+                        'Authorization': 'Bearer ' + store.getters.token
+                    }
+                });
+                this.configurations.push(response.data.data);
+            } catch (error) {
+                console.error("An error occurred:", error)
+            }
+        },
         logout() {
             this.$store.dispatch('logout');
             this.$router.push({ path: '/login' })
+        },
+        isStringSnakeCase(string) {
+            return string === string.toLowerCase().replace(/[^a-z0-9]+/g, '_');
+        },
+        toHumanReadableFormat(date) {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear();
+            const hours = date.getHours().toString().padStart(2, '0');
+            const minutes = date.getMinutes().toString().padStart(2, '0');
+
+            return `${day}/${month}/${year} ${hours}:${minutes}`;
         }
     },
     mounted() {
@@ -259,13 +327,13 @@ button {
 
 select,
 input[type="text"] {
-    border: 0.5px solid #ddd;
+    border: 0.5px solid #2B3453;
     border-radius: 5px;
-    padding: 0px 5px;
+    padding: 5px 5px;
     width: 100%;
     box-sizing: border-box;
     background-image: linear-gradient(#1E1E2E, #1E1E25);
-    color: #FFFF;
+    color: #99a4b0;
 }
 
 .json-content {

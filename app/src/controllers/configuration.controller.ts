@@ -64,3 +64,20 @@ export async function createJsonFormat() {
 
     return configurations;
 }
+
+export async function createConfiguration(newConfiguration: any): Promise<Configuration> {
+    newConfiguration.parameterKey = snakeToCamel(newConfiguration.parameterKey);
+
+    const db = admin.firestore();
+
+    const configuration = await db.collection('Configurations').doc(newConfiguration.parameterKey).get();
+    if (configuration.exists) {
+        throw new Error('Configuration already exists');
+    }
+
+    newConfiguration.createDate = admin.firestore.Timestamp.now();
+    const result = await db.collection('Configurations').doc(newConfiguration.parameterKey).set(newConfiguration);
+
+    newConfiguration.createDate = toHumanReadableFormat(newConfiguration.createDate.toDate());
+    return newConfiguration;
+}
