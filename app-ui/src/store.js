@@ -17,10 +17,10 @@ export default createStore({
     }
   },
   actions: {
-    async login({ commit }, payload) {
+    async signin({ commit }, payload) {
       try {
         const authService = new AuthService(this);
-        const response = await authService.login(payload.email, payload.password);
+        const response = await authService.signin(payload.email, payload.password);
 
         if (!response.success) {
           console.error(response.message);
@@ -36,9 +36,9 @@ export default createStore({
         return { success: false, message: 'Invalid email or password' }
       }
     },
-    async logout({ commit }) {
+    async signout({ commit }) {
       const authService = new AuthService(this);
-      await authService.logout();
+      await authService.signout();
       commit('SET_TOKEN', null);
       commit('SET_USER', null);
     }

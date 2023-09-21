@@ -6,7 +6,7 @@ export default class AuthService {
         this.store = store;
         this.tokenRefreshInterval = null;
     }
-    async login(email, password) {
+    async signin(email, password) {
         try {
             await signInWithEmailAndPassword(auth, email, password)
             const token = await auth.currentUser.getIdToken();
@@ -18,7 +18,7 @@ export default class AuthService {
         }
     }
 
-    async logout() {
+    async signout() {
         await auth.signOut();
         this.stopTokenRefresh();
     }

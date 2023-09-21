@@ -1,10 +1,10 @@
 <template>
-  <div class="login">
+  <div class="signin">
     <img src="../assets/icon.png" alt="App Icon" class="header-icon">
     <h2>Please sign in</h2>
     <input v-model="email" placeholder="Email" />
     <input v-model="password" type="password" placeholder="Password" />
-    <button @click="doLogin">Sign in</button>
+    <button @click="doSignin">Sign in</button>
     <footer> Codeway © 2021 </footer>
   </div>
 </template>
@@ -25,11 +25,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['login']),
-    async doLogin() {
-      const result = await this.login({ email: this.email, password: this.password });
+    ...mapActions(['signin']),
+    async doSignin() {
+      const result = await this.signin({ email: this.email, password: this.password });
       if (result.success) {
-        this.$router.push({ path: '/configurations' });
+        this.$router.push({ path: '/' });
       } else {
         this.toast.error(result.message);
       }
@@ -48,7 +48,7 @@ h2 {
   font-weight: lighter;
 }
 
-.login {
+.signin {
   display: flex;
   flex-direction: column;
   justify-content: center;

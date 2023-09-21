@@ -7,7 +7,7 @@
 
             <div v-if="showUserDetails" class="user-details">
                 <p>{{ $store.getters.user.email }}</p>
-                <button class="button-delete" @click="logout">Logout</button>
+                <button class="button-delete" @click="signout">Sign Out</button>
             </div>
         </div>
 
@@ -227,9 +227,9 @@ export default {
                 this.toast.error(error.response.data.message);
             }
         },
-        logout() {
-            this.$store.dispatch('logout');
-            this.$router.push({ path: '/login' })
+        signout() {
+            this.$store.dispatch('signout');
+            this.$router.push({ path: '/signin' })
         },
         isStringSnakeCase(string) {
             return string === string.toLowerCase().replace(/[^a-z0-9]+/g, '_');
