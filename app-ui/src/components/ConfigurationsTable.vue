@@ -145,7 +145,7 @@ export default {
                 this.configurations[updatedConfigIndex].type = config.type;
                 this.configurations[updatedConfigIndex].description = config.description;
 
-                await this.fetchJson(true);
+                await this.fetchJson(false);
             } catch (error) {
                 console.error("An error occurred:", error);
             }
@@ -164,8 +164,8 @@ export default {
                 console.error("An error occurred:", error);
             }
         },
-        async fetchJson(calledFromEdit = false) {
-            if (!calledFromEdit || typeof calledFromEdit !== 'boolean') {
+        async fetchJson(isButtonPressed = true) {
+            if (isButtonPressed) {
                 this.showJson = this.showJson ? false : true;
                 if (!this.showJson) return;
             }
@@ -203,6 +203,8 @@ export default {
                     }
                 });
                 this.configurations.push(response.data.data);
+
+                await this.fetchJson(false);
             } catch (error) {
                 console.error("An error occurred:", error)
             }
