@@ -1,7 +1,6 @@
 import { createStore } from 'vuex';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from './firebaseConfig';
 import createPersistedState from 'vuex-persistedstate'
+import AuthService from './authService';
 
 export default createStore({
   plugins: [createPersistedState()],
@@ -18,12 +17,17 @@ export default createStore({
     }
   },
   actions: {
-    async login({ commit }, { email, password }) {
+    async login({ commit }, payload) {
       try {
-        await signInWithEmailAndPassword(auth, email, password)
-        const token = await auth.currentUser.getIdToken();
-        commit('SET_USER', auth.currentUser);
-        commit('SET_TOKEN', token);
+        const authService = new AuthService(this);
+        const response = await authService.login(payload.email, payload.password);
+
+        if (!response.success) {
+          throw new Error(response.message);
+        }
+
+        commit('SET_USER', response.user);
+        commit('SET_TOKEN', response.token);
         return { success: true }
       } catch (error) {
         console.error(error);
@@ -31,7 +35,8 @@ export default createStore({
       }
     },
     async logout({ commit }) {
-      await auth.signOut();
+      const authService = new AuthService(this);
+      await authService.logout();
       commit('SET_TOKEN', null);
       commit('SET_USER', null);
     }
