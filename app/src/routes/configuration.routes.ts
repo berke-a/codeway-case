@@ -70,7 +70,6 @@ configurationRouter.put('/:parameterKey', async (req: any, res: any) => {
 configurationRouter.post('/', async (req: any, res: any) => {
     try {
         const newConfiguration = await createConfiguration(req.body);
-        console.log(newConfiguration)
         res.send({
             'status': 'success',
             'data': newConfiguration,
