@@ -160,6 +160,8 @@ export default {
                 });
                 console.log(response);
                 this.configurations = this.configurations.filter(c => c.parameterKey !== config.parameterKey);
+
+                await this.fetchJson(false);
             } catch (error) {
                 console.error("An error occurred:", error);
             }
