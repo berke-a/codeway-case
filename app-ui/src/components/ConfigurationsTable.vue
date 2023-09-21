@@ -7,7 +7,7 @@
 
             <div v-if="showUserDetails" class="user-details">
                 <p>{{ $store.getters.user.email }}</p>
-                <button class="delete" @click="logout">Logout</button>
+                <button class="button-delete" @click="logout">Logout</button>
             </div>
         </div>
 
@@ -93,9 +93,14 @@ import axios from 'axios';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-json';
 import 'prismjs/themes/prism-okaidia.css';
+import { useToast } from "vue-toastification";
 
 export default {
     name: 'ConfigurationsTable',
+    setup() {
+        const toast = useToast();
+        return { toast };
+    },
     data() {
         return {
             headers: [],
@@ -127,6 +132,7 @@ export default {
                 this.configurations = response.data.data;
             } catch (error) {
                 console.error("An error occurred:", error);
+                this.toast.error('An error occurred while fetching configurations!')
             }
         },
         makeConfigEditable(config) {
@@ -145,9 +151,12 @@ export default {
                 this.configurations[updatedConfigIndex].type = config.type;
                 this.configurations[updatedConfigIndex].description = config.description;
 
+                this.toast.success('Configuration updated successfully!');
+
                 await this.fetchJson(false);
             } catch (error) {
                 console.error("An error occurred:", error);
+                this.toast.error('An error occurred while updating configuration!')
             }
             this.chosenConfig = null;
         },
@@ -161,9 +170,12 @@ export default {
                 console.log(response);
                 this.configurations = this.configurations.filter(c => c.parameterKey !== config.parameterKey);
 
+                this.toast.success('Configuration deleted successfully!');
+
                 await this.fetchJson(false);
             } catch (error) {
                 console.error("An error occurred:", error);
+                this.toast.error('An error occurred while deleting configuration!')
             }
         },
         async fetchJson(isButtonPressed = true) {
@@ -185,16 +197,17 @@ export default {
                 });
             } catch (error) {
                 console.error("An error occurred:", error);
+                this.toast.error('An error occurred while fetching JSON preview!')
             }
         },
         async addConfig(newConfig) {
             if (!newConfig.parameterKey || !newConfig.value || !newConfig.type || !newConfig.description) {
-                console.error("All fields are required!");
+                this.toast.warning('All fields are required!');
                 return;
             }
 
             if (!this.isStringSnakeCase(newConfig.parameterKey)) {
-                console.error("Parameter key must be in snake case!");
+                this.toast.warning('Parameter key must be in snake_case!');
                 return;
             }
 
@@ -206,9 +219,12 @@ export default {
                 });
                 this.configurations.push(response.data.data);
 
+                this.toast.success('Configuration added successfully!');
+
                 await this.fetchJson(false);
             } catch (error) {
-                console.error("An error occurred:", error)
+                console.error("An error occurred:", error);
+                this.toast.error(error.response.data.message);
             }
         },
         logout() {

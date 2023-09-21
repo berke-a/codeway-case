@@ -23,7 +23,8 @@ export default createStore({
         const response = await authService.login(payload.email, payload.password);
 
         if (!response.success) {
-          throw new Error(response.message);
+          console.error(response.message);
+          return { success: false, message: 'Invalid email or password' }
         }
 
         commit('SET_USER', response.user);
@@ -32,7 +33,7 @@ export default createStore({
         return { success: true }
       } catch (error) {
         console.error(error);
-        return { success: false, message: error.message };
+        return { success: false, message: 'Invalid email or password' }
       }
     },
     async logout({ commit }) {

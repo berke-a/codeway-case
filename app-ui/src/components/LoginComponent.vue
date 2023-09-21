@@ -5,20 +5,23 @@
     <input v-model="email" placeholder="Email" />
     <input v-model="password" type="password" placeholder="Password" />
     <button @click="doLogin">Sign in</button>
-    <p v-if="errorMessage">{{ errorMessage }}</p>
     <footer> Codeway © 2021 </footer>
   </div>
 </template>
   
 <script>
 import { mapActions } from 'vuex';
+import { useToast } from 'vue-toastification';
 
 export default {
+  setup() {
+    const toast = useToast();
+    return { toast };
+  },
   data() {
     return {
       email: '',
       password: '',
-      errorMessage: ''
     };
   },
   methods: {
@@ -28,7 +31,7 @@ export default {
       if (result.success) {
         this.$router.push({ path: '/configurations' });
       } else {
-        this.errorMessage = result.message;
+        this.toast.error(result.message);
       }
     }
   }
