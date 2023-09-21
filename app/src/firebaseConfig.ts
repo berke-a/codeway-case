@@ -3,7 +3,7 @@ const serviceAccount = require('../codeway-task-33a0d-firebase-adminsdk-88mu9-d9
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://codeway-task-33a0d.firebaseio.com'
+  databaseURL: process.env.DB_URL
 });
 
 export default admin;
