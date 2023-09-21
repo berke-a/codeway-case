@@ -28,6 +28,7 @@ export default createStore({
 
         commit('SET_USER', response.user);
         commit('SET_TOKEN', response.token);
+
         return { success: true }
       } catch (error) {
         console.error(error);
