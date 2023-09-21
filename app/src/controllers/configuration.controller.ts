@@ -76,7 +76,7 @@ export async function createConfiguration(newConfiguration: any): Promise<Config
     }
 
     newConfiguration.createDate = admin.firestore.Timestamp.now();
-    const result = await db.collection('Configurations').doc(newConfiguration.parameterKey).set(newConfiguration);
+    await db.collection('Configurations').doc(newConfiguration.parameterKey).set(newConfiguration);
 
     newConfiguration.createDate = toHumanReadableFormat(newConfiguration.createDate.toDate());
     return newConfiguration;
