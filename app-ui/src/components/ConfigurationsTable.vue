@@ -50,20 +50,20 @@
 
                     <tr>
                         <td>
-                            <input v-model="newConfig.parameterKey" type="text" />
+                            <input v-model="newConfig.parameterKey" type="text" placeholder="New Parameter (snake_case)" />
                         </td>
                         <td>
-                            <input v-model="newConfig.value" type="text" />
+                            <input v-model="newConfig.value" type="text" placeholder="Value" />
                         </td>
                         <td>
                             <select v-model="newConfig.type">
                                 <option value="int">int</option>
                                 <option value="float">float</option>
-                                <option value="string">string</option>
+                                <option value="string" selected>string</option>
                             </select>
                         </td>
                         <td>
-                            <input v-model="newConfig.description" type="text" />
+                            <input v-model="newConfig.description" type="text" placeholder="New Description" />
                         </td>
                         <td>
                             <span> {{ currentDate }} </span>
