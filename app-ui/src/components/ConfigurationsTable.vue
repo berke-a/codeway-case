@@ -37,13 +37,13 @@
                         </td>
 
                         <td>
-                            <button v-if="chosenConfig === config.parameterKey" class="done"
+                            <button v-if="chosenConfig === config.parameterKey" class="button-done"
                                 @click="editConfig(config)">Done</button>
-                            <button v-else class="edit" @click="makeConfigEditable(config)">Edit</button>
+                            <button v-else class="button-edit" @click="makeConfigEditable(config)">Edit</button>
                         </td>
 
                         <td>
-                            <button class="delete" @click="deleteConfig(config)">Delete</button>
+                            <button class="button-delete" @click="deleteConfig(config)">Delete</button>
                         </td>
 
                     </tr>
@@ -69,14 +69,14 @@
                             <span> {{ currentDate }} </span>
                         </td>
                         <td>
-                            <button class="done" @click="addConfig(newConfig)">Add</button>
+                            <button class="button-add" @click="addConfig(newConfig)">Add</button>
                         </td>
 
                     </tr>
 
                 </tbody>
             </table>
-            <button @click="fetchJson" class="json">
+            <button @click="fetchJson" class="button-json">
                 Preview JSON file
             </button>
             <div v-if="showJson" class="json-content">
@@ -308,21 +308,25 @@ button {
     cursor: pointer;
 }
 
-.done {
+.button-done {
     background-image: linear-gradient(45deg, #379237, #1ECD97);
 }
 
-.edit {
+.button-edit {
     background-image: linear-gradient(45deg, #3161F5, #2089F8);
 }
 
-.delete {
+.button-delete {
     background-image: linear-gradient(45deg, #EF363B, #FB5681);
 }
 
-.json {
-    background-image: linear-gradient(45deg, #3161F5, #2089F8);
+.button-json {
+    background-image: linear-gradient(45deg, #00A8E9, #07E9C8);
     margin-left: 0;
+}
+
+.button-add {
+    background-image: linear-gradient(45deg, #00A8E9, #07E9C8);
 }
 
 select,
