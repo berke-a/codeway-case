@@ -41,7 +41,7 @@ img {
 }
 
 h2 {
-  color: #32325D;
+  color: #99a4b0;
   font-weight: lighter;
 }
 
@@ -79,6 +79,7 @@ footer {
   margin-top: 20px;
   color: #69727A;
   font-size: small;
-}</style>
+}
+</style>
 
   
