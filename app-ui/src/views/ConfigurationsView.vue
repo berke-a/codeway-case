@@ -16,12 +16,10 @@
         <div v-if="configurations.length" class="configurations-table">
 
             <ConfigurationsTableComponent v-if="isDesktop" :configurations="configurations" :headers="headers"
-                :editConfig="editConfig" :deleteConfig="deleteConfig" :addConfig="addConfig"
-                :addConfigMobile="addConfigMobile" />
+                :editConfig="editConfig" :deleteConfig="deleteConfig" :addConfig="addConfig" />
 
             <ConfigurationsMobileComponent v-else :configurations="configurations" :headers="headers"
-                :editConfig="editConfig" :deleteConfig="deleteConfig" :addConfig="addConfig"
-                :addConfigMobile="addConfigMobile" />
+                :editConfig="editConfig" :deleteConfig="deleteConfig" :addConfig="addConfig" />
 
 
             <button @click="fetchJson" class="button-json">
@@ -42,7 +40,6 @@ import Prism from 'prismjs';
 import 'prismjs/components/prism-json';
 import 'prismjs/themes/prism-okaidia.css';
 import { useToast } from "vue-toastification";
-
 import ConfigurationsTableComponent from '@/components/ConfigurationsTableComponent.vue';
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
 
@@ -65,6 +62,7 @@ export default {
             showUserDetails: false,
             json: '',
             showJson: false,
+            API_URL: 'http://localhost:3000',
         };
     },
     mounted() {
@@ -76,14 +74,8 @@ export default {
     },
     methods: {
         async fetchConfigurations() {
-            console.log(store.getters.user)
             try {
-                const response = await axios.get('http://localhost:3000/configurations', {
-                    headers: {
-                        'Authorization': 'Bearer ' + store.getters.token
-                    }
-                });
-                console.log(response);
+                const response = await this.sendRequest('GET', '', null);
                 this.headers = response.data.headers;
                 this.configurations = response.data.data;
             } catch (error) {
@@ -93,12 +85,8 @@ export default {
         },
         async editConfig(config) {
             try {
-                const response = await axios.put('http://localhost:3000/configurations/' + config.parameterKey, config, {
-                    headers: {
-                        'Authorization': 'Bearer ' + store.getters.token
-                    }
-                });
-                console.log(response);
+                await this.sendRequest('PUT', '/' + config.parameterKey, config)
+
                 const updatedConfigIndex = this.configurations.indexOf(config);
                 this.configurations[updatedConfigIndex].value = config.value;
                 this.configurations[updatedConfigIndex].type = config.type;
@@ -115,12 +103,8 @@ export default {
         },
         async deleteConfig(config) {
             try {
-                const response = await axios.delete('http://localhost:3000/configurations/' + config.parameterKey, {
-                    headers: {
-                        'Authorization': 'Bearer ' + store.getters.token
-                    }
-                });
-                console.log(response);
+                await this.sendRequest('DELETE', '/' + config.parameterKey, null);
+
                 this.configurations = this.configurations.filter(c => c.parameterKey !== config.parameterKey);
 
                 this.toast.success('Configuration deleted successfully!');
@@ -138,12 +122,8 @@ export default {
             }
 
             try {
-                const response = await axios.get('http://localhost:3000/configurations/json', {
-                    headers: {
-                        'Authorization': 'Bearer ' + store.getters.token
-                    }
-                });
-                console.log(response);
+                const response = await this.sendRequest('GET', '/json', null);
+
                 this.json = JSON.stringify(response.data.data, null, 4);
                 this.$nextTick(() => {
                     Prism.highlightAll();
@@ -165,11 +145,8 @@ export default {
             }
 
             try {
-                const response = await axios.post('http://localhost:3000/configurations/', newConfig, {
-                    headers: {
-                        'Authorization': 'Bearer ' + store.getters.token
-                    }
-                });
+                const response = await this.sendRequest('POST', '', newConfig);
+
                 this.configurations.push(response.data.data);
 
                 this.toast.success('Configuration added successfully!');
@@ -180,8 +157,24 @@ export default {
                 this.toast.error(error.response.data.message);
             }
         },
-        addConfigMobile() {
-            this.isMobileAddConfig = true;
+        async sendRequest(method, extraUrl, data) {
+            const url = this.API_URL + '/configurations' + extraUrl;
+            const headers = {
+                headers: {
+                    'Authorization': 'Bearer ' + store.getters.token
+                }
+            }
+
+            switch (method) {
+                case 'GET':
+                    return await axios.get(url, headers)
+                case 'POST':
+                    return await axios.post(url, data, headers)
+                case 'PUT':
+                    return await axios.put(url, data, headers)
+                case 'DELETE':
+                    return await axios.delete(url, headers)
+            }
         },
         signout() {
             this.$store.dispatch('signout');
