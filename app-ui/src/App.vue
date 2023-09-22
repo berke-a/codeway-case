@@ -24,12 +24,6 @@ body {
   padding: 20px;
   background-image: linear-gradient(#1E1E2E, #1E1E25);
   background-size: cover;
-  height: 100vh;
-}
-
-@media only screen and (max-width: 600px) {
-  #app {
-    height: 100%;
-  }
+  min-height: 100vh;
 }
 </style>
