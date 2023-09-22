@@ -67,3 +67,44 @@ input[type="text"] {
     background-image: linear-gradient(#1E1E2E, #1E1E25);
     color: #99a4b0;
 }
+
+@media only screen and (max-width: 600px) {
+    .mobile-config {
+        border: 1px solid #ccc;
+        border-radius: 20px;
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+
+
+    .mobile-add-title {
+        color: #FFFF;
+        font-weight: bold;
+        font-size: larger;
+    }
+
+    .config-field {
+        margin-bottom: 10px;
+    }
+
+    .mobile-key {
+        color: #FFFF;
+        font-weight: bold;
+    }
+
+    .mobile-value {
+        color: #FFFF;
+
+    }
+
+    .config-buttons {
+        width: 50%;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+    }
+
+    .button-add {
+        margin: 20px auto 0 0;
+    }
+}

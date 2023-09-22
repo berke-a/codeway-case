@@ -26,31 +26,17 @@
                 <button class="button-delete" @click="deleteConfig(config)">Delete</button>
             </div>
         </div>
-        <div class="mobile-config">
-            <span class="mobile-add-title">New Config</span>
-            <div class="config-field" v-for="(value, key) in newConfig" :key="key">
-                <span class="mobile-key">{{ key }}:</span>
-                <select v-if="key === 'type'" v-model="newConfig[key]">
-                    <option value="int">int</option>
-                    <option value="float">float</option>
-                    <option value="string">string</option>
-                </select>
-                <input v-else-if="key === 'parameterKey'" placeholder="New Parameter (snake_case)" v-model="newConfig[key]"
-                    type="text" />
-                <input v-else-if="key === 'value'" placeholder="Value" v-model="newConfig[key]" type="text" />
-                <input v-else-if="key === 'description'" placeholder="New Description" v-model="newConfig[key]"
-                    type="text" />
-                <span v-else-if="key === 'createDate'" class="mobile-value">{{ currentDate }}</span>
-                <span class="mobile-value" v-else>{{ value }}</span>
-            </div>
-            <button @click="addConfig(newConfig)" class=" button-add">Add</button>
-        </div>
+        <ConfigurationMobileAdd :addConfig="addConfig" />
     </div>
 </template>
 
 <script>
+import ConfigurationMobileAdd from "./add/ConfigurationMobileAdd.vue";
 
 export default {
+    components: {
+        ConfigurationMobileAdd,
+    },
     data() {
         return {
             currentDate: this.toHumanReadableFormat(new Date()),
@@ -86,45 +72,4 @@ export default {
 };
 </script>
 
-<style scoped>
-@media only screen and (max-width: 600px) {
-    .mobile-config {
-        border: 1px solid #ccc;
-        border-radius: 20px;
-        padding: 15px;
-        margin-bottom: 20px;
-    }
-
-
-    .mobile-add-title {
-        color: #FFFF;
-        font-weight: bold;
-        font-size: larger;
-    }
-
-    .config-field {
-        margin-bottom: 10px;
-    }
-
-    .mobile-key {
-        color: #FFFF;
-        font-weight: bold;
-    }
-
-    .mobile-value {
-        color: #FFFF;
-
-    }
-
-    .config-buttons {
-        width: 50%;
-        margin-left: auto;
-        margin-right: auto;
-        display: flex;
-    }
-
-    .button-add {
-        margin: 20px auto 0 0;
-    }
-}
-</style>
+<style scoped></style>

@@ -13,7 +13,7 @@
 
     </header>
     <div>
-        <div v-if="configurations.length" class="configurations-table">
+        <div v-if="configurations.length > 0" class="configurations-table">
 
             <ConfigurationsTableComponent v-if="isDesktop" :configurations="configurations" :headers="headers"
                 :editConfig="editConfig" :deleteConfig="deleteConfig" :addConfig="addConfig" />
@@ -22,6 +22,15 @@
                 :editConfig="editConfig" :deleteConfig="deleteConfig" :addConfig="addConfig" />
 
 
+            <button @click="fetchJson" class="button-json">
+                Preview JSON file
+            </button>
+            <div v-if="showJson" class="json-content">
+                <pre><code class="language-json">{{ json }}</code></pre>
+            </div>
+        </div>
+        <div v-else-if="configurations.length === 0">
+            <p>No configurations found!</p>
             <button @click="fetchJson" class="button-json">
                 Preview JSON file
             </button>
