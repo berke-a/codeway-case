@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import createPersistedState from 'vuex-persistedstate'
-import AuthService from './authService';
+import AuthService from './services/authService';
 
 export default createStore({
   plugins: [createPersistedState()],
