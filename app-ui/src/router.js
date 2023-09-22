@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import SigninComponent from '@/components/SigninComponent.vue';
-import ConfigurationsTable from '@/components/ConfigurationsTable.vue';
+import SigninView from '@/views/SigninView.vue';
+import ConfigurationsTable from '@/views/ConfigurationsTable.vue';
 import { auth } from './firebaseConfig';
 
 const routes = [
-    { path: '/signin', component: SigninComponent },
+    { path: '/signin', component: SigninView },
     { path: '/', component: ConfigurationsTable, meta: { requiresAuth: true } }
 ];
 
