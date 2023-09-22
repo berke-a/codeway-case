@@ -15,11 +15,7 @@
     <div>
         <div v-if="configurations.length" class="configurations-table">
             <table v-if="isDesktop">
-                <thead>
-                    <tr>
-                        <th v-for="header in headers" :key="header">{{ header }}</th>
-                    </tr>
-                </thead>
+                <ConfigurationHeader :headers="headers" />
                 <tbody>
 
                     <tr v-for="config in configurations" :key="config.parameterKey">
@@ -139,8 +135,14 @@ import 'prismjs/components/prism-json';
 import 'prismjs/themes/prism-okaidia.css';
 import { useToast } from "vue-toastification";
 
+import ConfigurationHeader from "@/components/ConfigurationHeader.vue";
+
+
 export default {
     name: 'ConfigurationsTable',
+    components: {
+        ConfigurationHeader,
+    },
     setup() {
         const toast = useToast();
         return { toast };
@@ -368,7 +370,7 @@ tbody {
 
 th,
 td {
-    padding: 8px 8px;
+    padding: 8px 8px 8px 0;
 }
 
 td {
