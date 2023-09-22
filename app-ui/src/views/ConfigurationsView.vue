@@ -47,7 +47,7 @@ import ConfigurationsTableComponent from '@/components/ConfigurationsTableCompon
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
 
 export default {
-    name: 'ConfigurationsTable',
+    name: 'ConfigurationsView',
     components: {
         ConfigurationsTableComponent,
         ConfigurationsMobileComponent,
