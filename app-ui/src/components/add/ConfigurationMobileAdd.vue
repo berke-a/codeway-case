@@ -15,7 +15,11 @@
             <span v-else-if="key === 'createDate'" class="mobile-value">{{ currentDate }}</span>
             <span class="mobile-value" v-else>{{ value }}</span>
         </div>
-        <button @click="addConfig(newConfig)" class=" button-add">Add</button>
+        <button v-if="isButtonClicked" class="button-done" style="margin-left: 0;"
+            @click="addConfig(newConfig).then(isButtonClicked = false)">&#10003;
+        </button>
+        <button v-else class="button-add" @click="isButtonClicked = true">Add</button>
+
     </div>
 </template>
 
@@ -24,6 +28,7 @@ export default {
     data() {
         return {
             currentDate: this.toHumanReadableFormat(new Date()),
+            isButtonClicked: false,
             newConfig: {
                 parameterKey: '',
                 value: '',
@@ -49,3 +54,7 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.button-done {}
+</style>
