@@ -30,6 +30,9 @@
             </div>
         </div>
         <div v-else-if="configurations.length === 0">
+            <div v-if="!isDesktop">
+                <ConfigurationMobileAdd :addConfig="addConfig" />
+            </div>
             <p>No configurations found!</p>
             <button @click="fetchJson" class="button-json">
                 Preview JSON file
@@ -52,6 +55,7 @@ import { useToast } from "vue-toastification";
 import ConfigurationsTableComponent from '@/components/ConfigurationsTableComponent.vue';
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
 import { auth } from '../firebaseConfig.js'
+import ConfigurationMobileAdd from '@/components/add/ConfigurationMobileAdd.vue';
 
 
 export default {
@@ -59,6 +63,7 @@ export default {
     components: {
         ConfigurationsTableComponent,
         ConfigurationsMobileComponent,
+        ConfigurationMobileAdd
     },
     setup() {
         const toast = useToast();
