@@ -440,7 +440,6 @@ input[type="text"] {
         color: #FFFF;
         font-weight: bold;
         font-size: larger;
-
     }
 
     .config-field {

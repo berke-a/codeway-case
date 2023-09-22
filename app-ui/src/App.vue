@@ -26,4 +26,10 @@ body {
   background-size: cover;
   height: 100vh;
 }
+
+@media only screen and (max-width: 600px) {
+  #app {
+    height: 100%;
+  }
+}
 </style>
