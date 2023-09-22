@@ -42,6 +42,8 @@ import 'prismjs/themes/prism-okaidia.css';
 import { useToast } from "vue-toastification";
 import ConfigurationsTableComponent from '@/components/ConfigurationsTableComponent.vue';
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
+import { auth } from '../firebaseConfig.js'
+
 
 export default {
     name: 'ConfigurationsView',
@@ -165,15 +167,30 @@ export default {
                 }
             }
 
-            switch (method) {
-                case 'GET':
-                    return await axios.get(url, headers)
-                case 'POST':
-                    return await axios.post(url, data, headers)
-                case 'PUT':
-                    return await axios.put(url, data, headers)
-                case 'DELETE':
-                    return await axios.delete(url, headers)
+            try {
+                switch (method) {
+                    case 'GET':
+                        return await axios.get(url, headers)
+                    case 'POST':
+                        return await axios.post(url, data, headers)
+                    case 'PUT':
+                        return await axios.put(url, data, headers)
+                    case 'DELETE':
+                        return await axios.delete(url, headers)
+                }
+            } catch (error) {
+                const newToken = await auth.currentUser.getIdToken(auth.currentUser, true)
+                store.commit('SET_TOKEN', newToken);
+                switch (method) {
+                    case 'GET':
+                        return await axios.get(url, headers)
+                    case 'POST':
+                        return await axios.post(url, data, headers)
+                    case 'PUT':
+                        return await axios.put(url, data, headers)
+                    case 'DELETE':
+                        return await axios.delete(url, headers)
+                }
             }
         },
         signout() {

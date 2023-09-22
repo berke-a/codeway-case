@@ -30,7 +30,7 @@ export default class AuthService {
                 const newToken = await user.getIdToken(true);
                 this.store.commit('SET_TOKEN', newToken);
             }
-        }, 50 * 60 * 1000);
+        }, 30 * 60 * 1000);
     }
 
     stopTokenRefresh() {
