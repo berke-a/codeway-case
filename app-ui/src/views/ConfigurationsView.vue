@@ -117,11 +117,14 @@ export default {
 
                 this.toast.success('Configuration deleted successfully!');
 
+
+
                 await this.fetchJson(false);
             } catch (error) {
                 console.error("An error occurred:", error);
                 this.toast.error('An error occurred while deleting configuration!')
             }
+            this.chosenConfig = null;
         },
         async fetchJson(isButtonPressed = true) {
             if (isButtonPressed) {

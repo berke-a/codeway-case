@@ -14,13 +14,22 @@
             </td>
 
             <td>
-                <button v-if="chosenConfig === config.parameterKey" class="button-done"
-                    @click="editConfig(config).then(chosenConfig = null)">Done</button>
-                <button v-else class="button-edit" @click="chosenConfig = config.parameterKey">Edit</button>
+                <div class="config-buttons">
+                    <button v-if="chosenConfig === config.parameterKey && !isDeleteButtonClicked" class="button-done"
+                        @click="editConfig(config).then(chosenConfig = null)">Done</button>
+                    <button v-else class="button-edit"
+                        @click="chosenConfig = config.parameterKey; isDeleteButtonClicked = false">Edit</button>
+                </div>
             </td>
 
             <td>
-                <button class="button-delete" @click="deleteConfig(config)">Delete</button>
+                <div class="config-buttons">
+                    <button v-if="chosenConfig === config.parameterKey && isDeleteButtonClicked" class="button-done"
+                        @click="deleteConfig(config).then(chosenConfig = null)">Done</button>
+                    <button v-else class="button-delete"
+                        @click="chosenConfig = config.parameterKey; isDeleteButtonClicked = true">
+                        Delete</button>
+                </div>
             </td>
 
         </tr>
@@ -37,6 +46,7 @@ export default {
     data() {
         return {
             chosenConfig: "",
+            isDeleteButtonClicked: false,
             currentDate: this.toHumanReadableFormat(new Date()),
             newConfig: {
                 parameterKey: "",

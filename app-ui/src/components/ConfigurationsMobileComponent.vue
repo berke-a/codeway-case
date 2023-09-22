@@ -2,7 +2,7 @@
     <div>
         <div class="mobile-config" v-for="config in configurations" :key="config.parameterKey">
             <div class="config-field" v-for="(value, key) in config" :key="key">
-                <div v-if="chosenConfig === config.parameterKey">
+                <div v-if="chosenConfig === config.parameterKey && !isDeleteButtonClicked">
                     <span class="mobile-key">{{ key }}:</span>
                     <select v-if="key === 'type'" v-model="config[key]">
                         <option value="int">int</option>
@@ -17,13 +17,24 @@
                 </div>
             </div>
 
-            <div class="config-buttons">
-                <div>
-                    <button v-if="chosenConfig === config.parameterKey" class="button-done"
+            <div>
+                <div v-if="chosenConfig === config.parameterKey" class="config-buttons">
+                    <button v-if="!isDeleteButtonClicked" class="button-done"
                         @click="editConfig(config).then(chosenConfig = null)">Done</button>
-                    <button v-else class="button-edit" @click="chosenConfig = config.parameterKey">Edit</button>
+                    <button v-if="!isDeleteButtonClicked" style="z-index: -1"></button>
+
+                    <button v-if="isDeleteButtonClicked" style="z-index: -1"></button>
+                    <button v-if="isDeleteButtonClicked" class="button-done"
+                        @click="deleteConfig(config).then(chosenConfig = null)">Done</button>
+
                 </div>
-                <button class="button-delete" @click="deleteConfig(config)">Delete</button>
+                <div v-else class="config-buttons">
+                    <button class="button-edit"
+                        @click="chosenConfig = config.parameterKey; isDeleteButtonClicked = false">Edit</button>
+                    <button class="button-delete" @click="chosenConfig = config.parameterKey; isDeleteButtonClicked = true">
+                        Delete</button>
+                </div>
+
             </div>
         </div>
         <ConfigurationMobileAdd :addConfig="addConfig" />
@@ -40,6 +51,7 @@ export default {
     data() {
         return {
             currentDate: this.toHumanReadableFormat(new Date()),
+            isDeleteButtonClicked: false,
             chosenConfig: null,
             newConfig: {
                 parameterKey: '',
@@ -72,4 +84,9 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+button {
+    margin-right: auto;
+    margin-left: auto;
+}
+</style>

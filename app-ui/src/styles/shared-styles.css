@@ -98,10 +98,9 @@ input[type="text"] {
     }
 
     .config-buttons {
-        width: 50%;
-        margin-left: auto;
-        margin-right: auto;
+        width: 100%;
         display: flex;
+        flex-direction: row;
     }
 
     .button-add {
