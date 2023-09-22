@@ -24,32 +24,6 @@
             </td>
 
         </tr>
-
-        <tr>
-            <td>
-                <input v-model="newConfig.parameterKey" type="text" placeholder="New Parameter (snake_case)" />
-            </td>
-            <td>
-                <input v-model="newConfig.value" type="text" placeholder="Value" />
-            </td>
-            <td>
-                <select v-model="newConfig.type">
-                    <option value="int">int</option>
-                    <option value="float">float</option>
-                    <option value="string" selected>string</option>
-                </select>
-            </td>
-            <td>
-                <input v-model="newConfig.description" type="text" placeholder="New Description" />
-            </td>
-            <td>
-                <span> {{ currentDate }} </span>
-            </td>
-            <td>
-                <button class="button-add" @click="addConfig(newConfig)">Add</button>
-            </td>
-
-        </tr>
     </tbody>
 </template>
 
@@ -59,7 +33,6 @@ export default {
         configurations: Array,
         editConfig: Function,
         deleteConfig: Function,
-        addConfig: Function,
     },
     data() {
         return {

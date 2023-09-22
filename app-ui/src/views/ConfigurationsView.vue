@@ -13,7 +13,7 @@
 
     </header>
     <div>
-        <div v-if="configurations.length > 0" class="configurations-table">
+        <div v-if="configurations.length >= 0" class="configurations-table">
 
             <ConfigurationsTableComponent v-if="isDesktop" :configurations="configurations" :headers="headers"
                 :editConfig="editConfig" :deleteConfig="deleteConfig" :addConfig="addConfig" />
@@ -22,7 +22,7 @@
                 :editConfig="editConfig" :deleteConfig="deleteConfig" :addConfig="addConfig" />
 
 
-            <button @click="fetchJson" class="button-json">
+            <button v-if="configurations.length > 0" @click="fetchJson" class="button-json">
                 Preview JSON file
             </button>
             <div v-if="showJson" class="json-content">
@@ -31,15 +31,9 @@
         </div>
         <div v-else-if="configurations.length === 0">
             <div v-if="!isDesktop">
-                <ConfigurationMobileAdd :addConfig="addConfig" />
+
             </div>
             <p>No configurations found!</p>
-            <button @click="fetchJson" class="button-json">
-                Preview JSON file
-            </button>
-            <div v-if="showJson" class="json-content">
-                <pre><code class="language-json">{{ json }}</code></pre>
-            </div>
         </div>
         <p v-else>Loading configurations...</p>
     </div>
@@ -55,7 +49,6 @@ import { useToast } from "vue-toastification";
 import ConfigurationsTableComponent from '@/components/ConfigurationsTableComponent.vue';
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
 import { auth } from '../firebaseConfig.js'
-import ConfigurationMobileAdd from '@/components/add/ConfigurationMobileAdd.vue';
 
 
 export default {
@@ -63,7 +56,6 @@ export default {
     components: {
         ConfigurationsTableComponent,
         ConfigurationsMobileComponent,
-        ConfigurationMobileAdd
     },
     setup() {
         const toast = useToast();

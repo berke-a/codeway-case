@@ -3,7 +3,7 @@
         <ConfigurationTableHeader :headers="headers" />
         <ConfigurationTableBody :configurations="configurations" :editConfig="editConfig" :deleteConfig="deleteConfig"
             :addConfig="addConfig" />
-
+        <ConfigurationAdd :addConfig="addConfig" />
     </table>
 </template>
 
@@ -11,6 +11,7 @@
 
 import ConfigurationTableHeader from "./tables/ConfigurationTableHeader.vue";
 import ConfigurationTableBody from "./tables/ConfigurationTableBody.vue";
+import ConfigurationAdd from "./add/ConfigurationAdd.vue";
 
 
 export default {
@@ -24,6 +25,7 @@ export default {
     components: {
         ConfigurationTableHeader,
         ConfigurationTableBody,
+        ConfigurationAdd
     },
 };
 </script>
