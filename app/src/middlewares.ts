@@ -1,21 +1,30 @@
 import admin from './firebaseConfig';
 
 export default async function checkAuth(req: any, res: any, next: any) {
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
-        return res.status(401).send('Missing authorization header');
-    }
+    try {
+        const authHeader = req.headers.authorization;
+        if (!authHeader) {
+            throw new Error('Authorization header is missing');
+        }
 
-    const token = authHeader.split('Bearer ')[1];
-    if (!token) {
-        return res.status(401).send('Malformed authorization header');
-    }
+        const token = authHeader.split('Bearer ')[1];
+        if (!token) {
+            throw new Error('Token is missing');
+        }
 
-    const decodedToken = await admin.auth().verifyIdToken(token);
-    if (!decodedToken) {
-        return res.status(401).send('Invalid token');
-    }
+        const decodedToken = await admin.auth().verifyIdToken(token);
+        if (!decodedToken) {
+            throw new Error('Token is invalid');
+        }
 
-    req.user = decodedToken;
-    return next();
+        req.user = decodedToken;
+        return next();
+    } catch (err: any) {
+        if (err.code === 'auth/id-token-expired') {
+            return res.status(401).send('Token has expired. Please reauthenticate.');
+        } else {
+            // Handle other errors here
+            return res.status(401).send(`Authentication error: ${err.message}`);
+        }
+    }
 };
