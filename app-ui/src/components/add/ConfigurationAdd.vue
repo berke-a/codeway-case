@@ -21,7 +21,11 @@
                 <span> {{ currentDate }} </span>
             </td>
             <td>
-                <button class="button-add" @click="addConfig(newConfig)">Add</button>
+                <button v-if="isButtonClicked" class="button-done"
+                    @click="addConfig(newConfig).then(isButtonClicked = false)">&#10003;
+                </button>
+                <button v-else class="button-add" @click="isButtonClicked = true">Add</button>
+
             </td>
         </tr>
     </tbody>
@@ -35,6 +39,7 @@ export default {
     data() {
         return {
             currentDate: this.toHumanReadableFormat(new Date()),
+            isButtonClicked: false,
             newConfig: {
                 parameterKey: '',
                 value: '',
