@@ -1,0 +1,69 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 20px 0;
+    text-align: left;
+}
+
+thead {
+    color: #778CA3;
+    font-size: larger;
+
+}
+
+tbody {
+    color: #FFFF;
+    font-size: small;
+}
+
+th,
+td {
+    padding: 8px 8px 8px 0;
+}
+
+td {
+    vertical-align: middle;
+}
+
+button {
+    display: block;
+    margin-left: auto;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    color: #FFFF;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.button-done {
+    background-image: linear-gradient(45deg, #379237, #1ECD97);
+}
+
+.button-edit {
+    background-image: linear-gradient(45deg, #3161F5, #2089F8);
+}
+
+.button-delete {
+    background-image: linear-gradient(45deg, #EF363B, #FB5681);
+}
+
+.button-json {
+    background-image: linear-gradient(45deg, #00A8E9, #07E9C8);
+    margin-left: 0;
+}
+
+.button-add {
+    background-image: linear-gradient(45deg, #00A8E9, #07E9C8);
+}
+
+select,
+input[type="text"] {
+    border: 0.5px solid #2B3453;
+    border-radius: 5px;
+    padding: 5px 5px;
+    width: 100%;
+    box-sizing: border-box;
+    background-image: linear-gradient(#1E1E2E, #1E1E25);
+    color: #99a4b0;
+}

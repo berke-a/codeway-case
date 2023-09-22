@@ -4,6 +4,7 @@ import router from './router'
 import store from './store'
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import './styles/shared-styles.css'
 
 const app = createApp(App)
 app.use(router)
