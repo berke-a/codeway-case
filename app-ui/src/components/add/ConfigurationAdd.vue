@@ -22,7 +22,7 @@
             </td>
             <td>
                 <button v-if="isButtonClicked" class="button-done"
-                    @click="addConfig(newConfig).then(isButtonClicked = false)">&#10003;
+                    @click="addConfig(newConfig); isButtonClicked = false; clearNewConfig()">&#10003;
                 </button>
                 <button v-else class="button-add" @click="isButtonClicked = true">Add</button>
 
@@ -50,6 +50,15 @@ export default {
         };
     },
     methods: {
+        clearNewConfig() {
+            this.newConfig = {
+                parameterKey: '',
+                value: '',
+                type: 'string',
+                description: '',
+                createDate: '',
+            };
+        },
         toHumanReadableFormat(date) {
             const day = date.getDate().toString().padStart(2, '0');
             const month = (date.getMonth() + 1).toString().padStart(2, '0');
