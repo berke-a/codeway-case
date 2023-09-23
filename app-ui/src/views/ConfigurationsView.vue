@@ -29,12 +29,6 @@
                 <pre><code class="language-json">{{ json }}</code></pre>
             </div>
         </div>
-        <div v-else-if="configurations.length === 0">
-            <div v-if="!isDesktop">
-
-            </div>
-            <p>No configurations found!</p>
-        </div>
         <p v-else>Loading configurations...</p>
     </div>
 </template>
@@ -86,6 +80,7 @@ export default {
                 const response = await this.sendRequest('GET', '', null);
                 this.headers = response.data.headers;
                 this.configurations = response.data.data;
+                console.log(this.configurations)
             } catch (error) {
                 console.error("An error occurred:", error);
                 this.toast.error('An error occurred while fetching configurations!')
@@ -158,6 +153,7 @@ export default {
             try {
                 const response = await this.sendRequest('POST', '', newConfig);
 
+                console.log(response.data.data)
                 this.configurations.push(response.data.data);
 
                 this.toast.success('Configuration added successfully!');
