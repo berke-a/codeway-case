@@ -7,7 +7,10 @@
 
             <div v-if="showUserDetails" class="user-details">
                 <p>{{ $store.getters.user.email }}</p>
-                <button class="button-delete" @click="signout">Sign Out</button>
+
+                <button v-if="isSignoutButtonClicked" class="button-done"
+                    @click="signout(); isSignoutButtonClicked = false">&#10003;</button>
+                <button v-else class="button-delete" @click="isSignoutButtonClicked = true">Sign Out</button>
             </div>
         </div>
 
@@ -59,6 +62,7 @@ export default {
         return {
             isDesktop: window.innerWidth > 600,
             isMobileAddConfig: false,
+            isSignoutButtonClicked: false,
             headers: [],
             configurations: [],
             showUserDetails: false,
@@ -121,8 +125,8 @@ export default {
             }
             this.chosenConfig = null;
         },
-        async fetchJson(isButtonPressed = true) {
-            if (isButtonPressed) {
+        async fetchJson(isButtonClicked = true) {
+            if (isButtonClicked) {
                 this.showJson = this.showJson ? false : true;
                 if (!this.showJson) return;
             }
