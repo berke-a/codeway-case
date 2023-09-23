@@ -265,5 +265,12 @@ header {
     padding: 10px 20px;
     width: fit-content;
 }
+
+@media screen and (max-width: 600px) {
+    .json-content {
+        font-size: small;
+    }
+
+}
 </style>
   
