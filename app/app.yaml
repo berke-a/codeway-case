@@ -1,0 +1,6 @@
+env: standard
+runtime: nodejs18
+service: backend
+
+env_variables:
+  DB_URL: "https://codeway-task-33a0d.firebaseio.com"
