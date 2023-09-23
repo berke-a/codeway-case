@@ -45,7 +45,6 @@ import 'prismjs/themes/prism-okaidia.css';
 import { useToast } from "vue-toastification";
 import ConfigurationsTableComponent from '@/components/ConfigurationsTableComponent.vue';
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
-import { auth } from '../firebaseConfig.js'
 
 
 export default {
@@ -176,30 +175,15 @@ export default {
                 }
             }
 
-            try {
-                switch (method) {
-                    case 'GET':
-                        return await axios.get(url, headers)
-                    case 'POST':
-                        return await axios.post(url, data, headers)
-                    case 'PUT':
-                        return await axios.put(url, data, headers)
-                    case 'DELETE':
-                        return await axios.delete(url, headers)
-                }
-            } catch (error) {
-                const newToken = await auth.currentUser.getIdToken(auth.currentUser, true)
-                store.commit('SET_TOKEN', newToken);
-                switch (method) {
-                    case 'GET':
-                        return await axios.get(url, headers)
-                    case 'POST':
-                        return await axios.post(url, data, headers)
-                    case 'PUT':
-                        return await axios.put(url, data, headers)
-                    case 'DELETE':
-                        return await axios.delete(url, headers)
-                }
+            switch (method) {
+                case 'GET':
+                    return await axios.get(url, headers)
+                case 'POST':
+                    return await axios.post(url, data, headers)
+                case 'PUT':
+                    return await axios.put(url, data, headers)
+                case 'DELETE':
+                    return await axios.delete(url, headers)
             }
         },
         signout() {
@@ -209,12 +193,10 @@ export default {
         isStringSnakeCase(string) {
             return string === string.toLowerCase().replace(/[^a-z0-9]+/g, '_');
         },
+        checkScreenSize() {
+            this.isDesktop = window.innerWidth > 600;
+        },
     },
-
-    checkScreenSize() {
-        this.isDesktop = window.innerWidth > 600;
-    },
-
 };
 </script>
   
