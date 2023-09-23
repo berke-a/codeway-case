@@ -1,17 +1,17 @@
 <template>
     <table>
-        <ConfigurationTableHeader :headers="headers" />
-        <ConfigurationTableBody :configurations="configurations" :editConfig="editConfig" :deleteConfig="deleteConfig"
+        <ConfigurationsTableHeader :headers="headers" />
+        <ConfigurationsTableBody :configurations="configurations" :editConfig="editConfig" :deleteConfig="deleteConfig"
             :addConfig="addConfig" />
-        <ConfigurationAdd :addConfig="addConfig" />
+        <ConfigurationsAdd :addConfig="addConfig" />
     </table>
 </template>
 
 <script>
 
-import ConfigurationTableHeader from "./tables/ConfigurationTableHeader.vue";
-import ConfigurationTableBody from "./tables/ConfigurationTableBody.vue";
-import ConfigurationAdd from "./add/ConfigurationAdd.vue";
+import ConfigurationsTableHeader from "./tables/ConfigurationsTableHeader.vue";
+import ConfigurationsTableBody from "./tables/ConfigurationsTableBody.vue";
+import ConfigurationsAdd from "./add/ConfigurationsAdd.vue";
 
 
 export default {
@@ -23,9 +23,9 @@ export default {
         addConfig: Function,
     },
     components: {
-        ConfigurationTableHeader,
-        ConfigurationTableBody,
-        ConfigurationAdd
+        ConfigurationsTableHeader,
+        ConfigurationsTableBody,
+        ConfigurationsAdd
     },
 };
 </script>

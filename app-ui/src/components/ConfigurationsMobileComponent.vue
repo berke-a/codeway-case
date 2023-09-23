@@ -1,18 +1,18 @@
 <template>
     <div>
         <ConfigurationsMobileBody :configurations="configurations" :editConfig="editConfig" :deleteConfig="deleteConfig" />
-        <ConfigurationMobileAdd :addConfig="addConfig" />
+        <ConfigurationsMobileAdd :addConfig="addConfig" />
     </div>
 </template>
 
 <script>
-import ConfigurationMobileAdd from "./add/ConfigurationMobileAdd.vue";
+import ConfigurationsMobileAdd from "./add/ConfigurationsMobileAdd.vue";
 import ConfigurationsMobileBody from "./ConfigurationsMobileBody.vue";
 
 export default {
     components: {
         ConfigurationsMobileBody,
-        ConfigurationMobileAdd,
+        ConfigurationsMobileAdd,
     },
     data() {
         return {
