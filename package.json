@@ -8,6 +8,6 @@
         "start:app": "cd app && npm run dev",
         "start:app-ui": "cd app-ui && npm run serve",
         "install": "npm run install:app && npm run install:app-ui",
-        "start": "concurrently \"npm run start:app\" \"npm run start:app-ui\"",
+        "start": "concurrently \"npm run start:app\" \"npm run start:app-ui\""
     }
 }
