@@ -20,12 +20,12 @@
             <div>
                 <div v-if="chosenConfig === config.parameterKey" class="config-buttons">
                     <button v-if="!isDeleteButtonClicked" class="button-done"
-                        @click="editConfig(config).then(chosenConfig = null)">Done</button>
+                        @click="editConfig(config).then(chosenConfig = null)">&#10003;</button>
                     <button v-if="!isDeleteButtonClicked" style="z-index: -1"></button>
 
                     <button v-if="isDeleteButtonClicked" style="z-index: -1"></button>
                     <button v-if="isDeleteButtonClicked" class="button-done"
-                        @click="deleteConfig(config).then(chosenConfig = null)">Done</button>
+                        @click="deleteConfig(config).then(chosenConfig = null)">&#10003;</button>
 
                 </div>
                 <div v-else class="config-buttons">
