@@ -45,6 +45,7 @@ import 'prismjs/themes/prism-okaidia.css';
 import { useToast } from "vue-toastification";
 import ConfigurationsTableComponent from '@/components/ConfigurationsTableComponent.vue';
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
+import { isStringSnakeCase, checkScreenSize } from '../utils.js';
 
 
 export default {
@@ -72,10 +73,10 @@ export default {
     },
     mounted() {
         this.fetchConfigurations();
-        window.addEventListener('resize', this.checkScreenSize);
+        window.addEventListener('resize', checkScreenSize);
     },
     beforeUnmount() {
-        window.removeEventListener('resize', this.checkScreenSize);
+        window.removeEventListener('resize', checkScreenSize);
     },
     methods: {
         async fetchConfigurations() {
@@ -148,7 +149,7 @@ export default {
                 return;
             }
 
-            if (!this.isStringSnakeCase(newConfig.parameterKey)) {
+            if (!isStringSnakeCase(newConfig.parameterKey)) {
                 this.toast.warning('Parameter key must be in snake_case!');
                 return;
             }
@@ -189,12 +190,6 @@ export default {
         signout() {
             this.$store.dispatch('signout');
             this.$router.push({ path: '/signin' })
-        },
-        isStringSnakeCase(string) {
-            return string === string.toLowerCase().replace(/[^a-z0-9]+/g, '_');
-        },
-        checkScreenSize() {
-            this.isDesktop = window.innerWidth > 600;
         },
     },
 };
