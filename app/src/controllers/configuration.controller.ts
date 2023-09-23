@@ -79,5 +79,6 @@ export async function createConfiguration(newConfiguration: any): Promise<Config
     await db.collection('Configurations').doc(newConfiguration.parameterKey).set(newConfiguration);
 
     newConfiguration.createDate = toHumanReadableFormat(newConfiguration.createDate.toDate());
+    newConfiguration.parameterKey = camelToSnake(newConfiguration.parameterKey);
     return newConfiguration;
 }
