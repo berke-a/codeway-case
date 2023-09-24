@@ -16,6 +16,8 @@ This is a full stack application that allows users to create, read, update, and 
 
 I didn't utilize `typescript` for the front end because I didn't have prior experience with VueJS. I wanted to get the application up and running as quickly as possible.
 
+I've deployed the fullstack application to `Google Cloud Platform`. The application is running on `https://frontend-dot-codeway-task-399914.lm.r.appspot.com/`.
+
 ## Installation
 1. Clone the repository
 2. Run `npm install` in the root directory. This will concurrently install the server and client dependencies.
