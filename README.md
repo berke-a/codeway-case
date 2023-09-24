@@ -5,6 +5,11 @@
    <li><a href="#description">Description</a></li>
    <li><a href="#installation">Installation</a></li>
    <li><a href="#authorization">Authorization</a></li>
+   <li><a href="#screenshots">Screenshots</a></li>
+   <ul>
+      <li><a href="#desktop">Desktop</a></li>
+      <li><a href="#mobile">Mobile</a></li>
+   </ul>
    <li><a href="#api-endpoints">API Endpoints</a></li>
    <li><a href="#project-structure">Project Structure</a></li>
 </ul>
