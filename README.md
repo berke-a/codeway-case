@@ -22,9 +22,10 @@ I've deployed the fullstack application to `Google Cloud Platform`. The applicat
 
 ## Installation
 1. Clone the repository
-2. Run `npm install` in the root directory. This will concurrently install the server and client dependencies.
-3. Run `npm start` in the root directory. This will concurrently start the server and client.
-4. The application will be running on `http://localhost:8080/`
+2. Go to the root folder `$ cd codeway-case`
+3. Run `$ npm install` in the root directory. This will concurrently install the server and client dependencies.
+4. Run `$ npm start` in the root directory. This will concurrently start the server and client.
+5. The application will be running on `http://localhost:8080/`
 
 ## Authorization
 Login with an existing account. 
