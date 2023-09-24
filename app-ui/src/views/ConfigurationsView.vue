@@ -68,6 +68,7 @@ export default {
             showUserDetails: false,
             json: '',
             showJson: false,
+            isTokenRefreshedBefore: false,
             // API_URL: 'https://backend-dot-codeway-task-399914.lm.r.appspot.com',
             API_URL: 'http://localhost:3000',
         };
@@ -168,6 +169,17 @@ export default {
                 this.toast.error(error.response.data.message);
             }
         },
+        async refreshToken() {
+            if (this.isTokenRefreshedBefore) return false;
+            try {
+                const idToken = await auth.currentUser.getIdToken(true);
+                this.$store.commit('SET_TOKEN', idToken);
+                return true;
+            } catch (error) {
+                console.error("Token refresh failed:", error);
+                return false;
+            }
+        },
         async sendRequest(method, extraUrl, data) {
             const url = this.API_URL + '/configurations' + extraUrl;
             const headers = {
@@ -188,9 +200,19 @@ export default {
                 }
             } catch (error) {
                 if (error.response.status === 401) {
-                    const idToken = await auth.currentUser.getIdToken(/* forceRefresh */ true)
-                    this.$store.commit('SET_TOKEN', idToken);
-                    this.toast.info('Refreshed token! Please try again.')
+
+                    const tokenRefreshed = await this.refreshToken();
+                    if (tokenRefreshed) {
+                        this.isTokenRefreshedBefore = true;
+                        return await this.sendRequest(method, extraUrl, data);
+                    }
+
+                    this.isTokenRefreshedBefore = false;
+
+                    this.toast.error('An error occurred while refreshing token! Please sign in again.')
+                    setTimeout(() => {
+                        this.signout();
+                    }, 3000);
                 }
                 throw error;
             }
