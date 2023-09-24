@@ -54,3 +54,10 @@ export default {
     methods: {},
 };
 </script>
+
+<style>
+button {
+    margin-left: auto;
+    margin-right: auto;
+}
+</style>
