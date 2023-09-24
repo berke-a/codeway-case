@@ -1,5 +1,16 @@
 # Project
 
+## Table of Contents  
+<ul>
+   <li><a href="#description">Description</a></li>
+   <li><a href="#installation">Installation</a></li>
+   <li><a href="#authorization">Authorization</a></li>
+   <li><a href="#api-endpoints">API Endpoints</a></li>
+   <li><a href="#project-structure">Project Structure</a></li>
+</ul>
+
+
+
 ## Description 
 This is a full stack application that allows users to create, read, update, and delete configuration items. I've used `NodeTS` and `Express` to create a RESTful API, `VueJS` to create the front end, and `Firebase` for the database and authentication.
 
