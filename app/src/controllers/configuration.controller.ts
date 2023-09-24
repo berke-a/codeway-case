@@ -1,6 +1,6 @@
-import admin from '../firebaseConfig';
-import { Configuration } from '../models/configuration.model';
-import { camelToSnake, snakeToCamel, toHumanReadableFormat } from '../utils';
+import admin from '../firebaseConfig.js';
+import { Configuration } from '../models/configuration.model.js';
+import { camelToSnake, snakeToCamel, toHumanReadableFormat } from '../utils.js';
 
 export async function getConfigurations() {
     const configurationArray: Configuration[] = [];
@@ -27,8 +27,13 @@ export async function updateConfiguration(parameterKey: string, updatedConfig: a
         throw new Error('Configuration does not exist');
     }
 
+    const configData = configuration.data();
+    if (!configData) {
+        throw new Error('Configuration does not exist');
+    }
+
     delete updatedConfig.parameterKey;
-    updatedConfig.createDate = configuration.data().createDate;
+    updatedConfig.createDate = configData.createDate;
     await db.collection('Configurations').doc(parameterKey).update(updatedConfig);
     return updatedConfig;
 }

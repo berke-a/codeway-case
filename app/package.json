@@ -1,12 +1,13 @@
 {
   "name": "app",
+  "type": "module",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.ts",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "node dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node' app.ts",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec 'ts-node --esm' app.ts",
     "build": "tsc -p ."
   },
   "author": "",
@@ -14,11 +15,13 @@
   "dependencies": {
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",
+    "express": "^4.18.2",
     "firebase": "^10.4.0",
-    "firebase-admin": "^11.10.1",
-    "ts-node": "^10.9.1"
+    "firebase-admin": "^11.10.1"
   },
   "devDependencies": {
-    "nodemon": "^3.0.1"
+    "@types/cors": "^2.8.14",
+    "nodemon": "^3.0.1",
+    "ts-node": "^10.9.1"
   }
 }

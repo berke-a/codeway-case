@@ -1,4 +1,4 @@
-import admin from './firebaseConfig';
+import admin from './firebaseConfig.js';
 
 export default async function checkAuth(req: any, res: any, next: any) {
     try {
