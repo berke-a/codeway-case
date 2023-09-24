@@ -28,7 +28,7 @@ I've deployed the fullstack application to `Google Cloud Platform`. The applicat
 5. The application will be running on `http://localhost:8080/`
 
 ## Authorization
-Login with an existing account. 
+Login information
    - Email: `berke@codeway.com`
    - Password: `codeway`
 
