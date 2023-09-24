@@ -82,8 +82,8 @@ export default {
         async fetchConfigurations() {
             try {
                 const response = await this.sendRequest('GET', '', null);
-                this.headers = response.data.headers;
-                this.configurations = response.data.data;
+                this.headers = response.data.data.headers;
+                this.configurations = response.data.data.configurations;
                 console.log(this.configurations)
             } catch (error) {
                 console.error("An error occurred:", error);
@@ -172,7 +172,7 @@ export default {
             const url = this.API_URL + '/configurations' + extraUrl;
             const headers = {
                 headers: {
-                    'Authorization': 'Bearer ' + store.getters.token
+                    'Authorization': 'Bearer ' + store.getters.token,
                 }
             }
 

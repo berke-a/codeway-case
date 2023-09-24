@@ -1,8 +1,7 @@
 
 import { Router } from 'express';
-import { getConfigurations, updateConfiguration, deleteConfiguration, createJsonFormat, createConfiguration } from '../controllers/configuration.controller';
-import checkAuth from '../middlewares';
-import { toHumanReadableFormat } from '../utils';
+import { getConfigurations, updateConfiguration, deleteConfiguration, createJsonFormat, createConfiguration } from '../controllers/configuration.controller.js';
+import checkAuth from '../middlewares.js';
 
 const configurationRouter = Router();
 
@@ -21,8 +20,10 @@ configurationRouter.get('/', async (req: any, res: any) => {
         const configurations = await getConfigurations();
         res.send({
             'status': 'success',
-            'headers': configurationTableHeaders,
-            'data': configurations,
+            'data': {
+                'headers': configurationTableHeaders,
+                'configurations': configurations,
+            }
         });
     } catch (error) {
         console.log(error);
