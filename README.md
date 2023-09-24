@@ -14,6 +14,18 @@ Login with an existing account.
    - Email: `berke@codeway.com`
    - Password: `codeway`
 
+
+## API Endpoints
+| Method | Endpoint          | Description                       |
+| ------ | ----------------- | --------------------------------- |
+| POST   | api/signing       | Sign in                           |
+| GET    | api/              | Get all configurations            |
+| GET    | api/json          | Get configurations in JSON format |
+| PUT    | api/:parameterKey | Update a configuration            |
+| POST   | api/              | Create a configuration            |
+| DELETE | api/:parameterKey | Delete a configuration            |
+
+
 ## Project Structure
 ```
 .
@@ -54,12 +66,3 @@ Login with an existing account.
 └── README.md
 ```
 
-## API Endpoints
-| Method | Endpoint          | Description                       |
-| ------ | ----------------- | --------------------------------- |
-| POST   | api/signing       | Sign in                           |
-| GET    | api/              | Get all configurations            |
-| GET    | api/json          | Get configurations in JSON format |
-| PUT    | api/:parameterKey | Update a configuration            |
-| POST   | api/              | Create a configuration            |
-| DELETE | api/:parameterKey | Delete a configuration            |
