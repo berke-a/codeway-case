@@ -19,6 +19,5 @@ export default class AuthService {
 
     async signout() {
         await auth.signOut();
-        this.stopTokenRefresh();
     }
 }
