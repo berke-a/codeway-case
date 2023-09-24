@@ -12,7 +12,9 @@
 
 
 ## Description 
-This is a full stack application that allows users to create, read, update, and delete configuration items. I've used `NodeTS` and `Express` to create a RESTful API, `VueJS` to create the front end, and `Firebase` for the database and authentication.
+This is a full stack application that allows users to create, read, update, and delete configuration items. I've used `NodeTS` and `Express` to create a RESTful API, `VueJS` to create the front end, and `Firebase` for the database and authentication. 
+
+I didn't utilize `typescript` for the front end because I didn't have prior experience with VueJS. I wanted to get the application up and running as quickly as possible.
 
 ## Installation
 1. Clone the repository
@@ -24,6 +26,17 @@ This is a full stack application that allows users to create, read, update, and 
 Login with an existing account. 
    - Email: `berke@codeway.com`
    - Password: `codeway`
+
+
+## Screenshots
+
+### Desktop
+<img src="https://imgur.com/LGz0U5j.jpeg" width="600"/>
+<img src="https://imgur.com/8X5xjCK.jpeg" width="600"/>
+<img src="https://imgur.com/lFTVvmY.jpeg" width="600"/>
+
+### Mobile
+<img src="https://imgur.com/Uvl55RZ.jpeg" width="600"/>
 
 
 ## API Endpoints
