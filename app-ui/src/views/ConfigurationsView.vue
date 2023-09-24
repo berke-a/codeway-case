@@ -68,6 +68,7 @@ export default {
             showUserDetails: false,
             json: '',
             showJson: false,
+            // API_URL: 'https://backend-dot-codeway-task-399914.lm.r.appspot.com',
             API_URL: 'http://localhost:3000',
         };
     },
@@ -84,7 +85,6 @@ export default {
                 const response = await this.sendRequest('GET', '', null);
                 this.headers = response.data.data.headers;
                 this.configurations = response.data.data.configurations;
-                console.log(this.configurations)
             } catch (error) {
                 console.error("An error occurred:", error);
                 this.toast.error('An error occurred while fetching configurations!')
