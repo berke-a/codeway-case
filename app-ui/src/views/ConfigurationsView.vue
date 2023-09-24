@@ -46,7 +46,7 @@ import { useToast } from "vue-toastification";
 import ConfigurationsTableComponent from '@/components/ConfigurationsTableComponent.vue';
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
 import { isStringSnakeCase, checkScreenSize } from '../utils.js';
-
+import { auth } from '../firebaseConfig.js';
 
 export default {
     name: 'ConfigurationsView',
@@ -175,16 +175,24 @@ export default {
                     'Authorization': 'Bearer ' + store.getters.token,
                 }
             }
-
-            switch (method) {
-                case 'GET':
-                    return await axios.get(url, headers)
-                case 'POST':
-                    return await axios.post(url, data, headers)
-                case 'PUT':
-                    return await axios.put(url, data, headers)
-                case 'DELETE':
-                    return await axios.delete(url, headers)
+            try {
+                switch (method) {
+                    case 'GET':
+                        return await axios.get(url, headers)
+                    case 'POST':
+                        return await axios.post(url, data, headers)
+                    case 'PUT':
+                        return await axios.put(url, data, headers)
+                    case 'DELETE':
+                        return await axios.delete(url, headers)
+                }
+            } catch (error) {
+                if (error.response.status === 401) {
+                    const idToken = await auth.currentUser.getIdToken(/* forceRefresh */ true)
+                    this.$store.commit('SET_TOKEN', idToken);
+                    this.toast.info('Refreshed token! Please try again.')
+                }
+                throw error;
             }
         },
         signout() {
