@@ -49,12 +49,11 @@ Login with an existing account.
 ## API Endpoints
 | Method | Endpoint       | Description                       |
 | ------ | -------------- | --------------------------------- |
-| POST   | /signing       | Sign in                           |
 | GET    | /              | Get all configurations            |
-| GET    | /json          | Get configurations in JSON format |
 | PUT    | /:parameterKey | Update a configuration            |
 | POST   | /              | Create a configuration            |
 | DELETE | /:parameterKey | Delete a configuration            |
+| GET    | /json          | Get configurations in JSON format |
 
 
 ## Project Structure
