@@ -199,8 +199,7 @@ export default {
                         return await axios.delete(url, headers)
                 }
             } catch (error) {
-                if (error.response.status === 401) {
-
+                if (error.response && error.response.status && error.response.status === 401) {
                     const tokenRefreshed = await this.refreshToken();
                     if (tokenRefreshed) {
                         this.isTokenRefreshedBefore = true;
@@ -213,6 +212,7 @@ export default {
                     setTimeout(() => {
                         this.signout();
                     }, 3000);
+                    return;
                 }
                 throw error;
             }
