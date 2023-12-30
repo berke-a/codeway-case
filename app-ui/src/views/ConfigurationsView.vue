@@ -45,7 +45,6 @@ import { useToast } from "vue-toastification";
 import ConfigurationsTableComponent from '@/components/ConfigurationsTableComponent.vue';
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
 import { isStringSnakeCase, checkScreenSize } from '../utils.js';
-import { auth } from '../firebaseConfig.js';
 import AuthService from '@/services/authService';
 
 export default {
