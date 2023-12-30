@@ -20,4 +20,8 @@ export default class AuthService {
     async signout() {
         await auth.signOut();
     }
+    async getToken() {
+        return auth.currentUser ? await auth.currentUser.getIdToken() : null;
+    }
+
 }

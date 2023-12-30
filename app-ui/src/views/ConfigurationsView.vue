@@ -37,7 +37,6 @@
 </template>
   
 <script>
-import store from '@/store';
 import axios from 'axios';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-json';
@@ -47,6 +46,7 @@ import ConfigurationsTableComponent from '@/components/ConfigurationsTableCompon
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
 import { isStringSnakeCase, checkScreenSize } from '../utils.js';
 import { auth } from '../firebaseConfig.js';
+import AuthService from '@/services/authService';
 
 export default {
     name: 'ConfigurationsView',
@@ -68,6 +68,7 @@ export default {
             showUserDetails: false,
             json: '',
             showJson: false,
+            authService: new AuthService(this),
             isTokenRefreshedBefore: false,
             // API_URL: 'https://backend-dot-codeway-task-399914.lm.r.appspot.com',
             API_URL: 'http://localhost:3000',
@@ -169,52 +170,23 @@ export default {
                 this.toast.error(error.response.data.message);
             }
         },
-        async refreshToken() {
-            if (this.isTokenRefreshedBefore) return false;
-            try {
-                const idToken = await auth.currentUser.getIdToken(true);
-                this.$store.commit('SET_TOKEN', idToken);
-                return true;
-            } catch (error) {
-                console.error("Token refresh failed:", error);
-                return false;
-            }
-        },
         async sendRequest(method, extraUrl, data) {
             const url = this.API_URL + '/configurations' + extraUrl;
+            const token = await this.authService.getToken();
             const headers = {
                 headers: {
-                    'Authorization': 'Bearer ' + store.getters.token,
+                    'Authorization': 'Bearer ' + token,
                 }
             }
-            try {
-                switch (method) {
-                    case 'GET':
-                        return await axios.get(url, headers)
-                    case 'POST':
-                        return await axios.post(url, data, headers)
-                    case 'PUT':
-                        return await axios.put(url, data, headers)
-                    case 'DELETE':
-                        return await axios.delete(url, headers)
-                }
-            } catch (error) {
-                if (error.response && error.response.status && error.response.status === 401) {
-                    const tokenRefreshed = await this.refreshToken();
-                    if (tokenRefreshed) {
-                        this.isTokenRefreshedBefore = true;
-                        return await this.sendRequest(method, extraUrl, data);
-                    }
-
-                    this.isTokenRefreshedBefore = false;
-
-                    this.toast.error('An error occurred while refreshing token! Please sign in again.')
-                    setTimeout(() => {
-                        this.signout();
-                    }, 3000);
-                    return;
-                }
-                throw error;
+            switch (method) {
+                case 'GET':
+                    return await axios.get(url, headers)
+                case 'POST':
+                    return await axios.post(url, data, headers)
+                case 'PUT':
+                    return await axios.put(url, data, headers)
+                case 'DELETE':
+                    return await axios.delete(url, headers)
             }
         },
         signout() {
