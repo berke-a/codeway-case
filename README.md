@@ -14,6 +14,8 @@
 
 
 ## Description 
+I've created a full stack application for the Codeway case. You can find the detailed case description [here](case-details/requirements.pdf). Additional screenshots for the case can be found in case-details folder.
+
 This full stack application allows users to create, read, update, and delete configuration items. I've used `NodeTS` and `Express` to create a RESTful API, `VueJS` to create the front end, and `Firebase` for the database and authentication. 
 
 I didn't utilize `typescript` for the front end because I didn't have prior experience with VueJS. I wanted to get the application up and running as quickly as possible.
