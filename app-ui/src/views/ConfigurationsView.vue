@@ -37,15 +37,15 @@
 </template>
   
 <script>
-import axios from 'axios';
 import Prism from 'prismjs';
 import 'prismjs/components/prism-json';
 import 'prismjs/themes/prism-okaidia.css';
 import { useToast } from "vue-toastification";
 import ConfigurationsTableComponent from '@/components/ConfigurationsTableComponent.vue';
 import ConfigurationsMobileComponent from '@/components/ConfigurationsMobileComponent.vue';
-import { isStringSnakeCase, checkScreenSize } from '../utils.js';
+import { checkScreenSize } from '../utils.js';
 import AuthService from '@/services/authService';
+import ConfigurationsService from '@/services/configurationsService';
 
 export default {
     name: 'ConfigurationsView',
@@ -82,19 +82,20 @@ export default {
     },
     methods: {
         async fetchConfigurations() {
-            try {
-                const response = await this.sendRequest('GET', '', null);
-                this.headers = response.data.data.headers;
-                this.configurations = response.data.data.configurations;
-            } catch (error) {
-                console.error("An error occurred:", error);
-                this.toast.error('An error occurred while fetching configurations!')
+            const response = await ConfigurationsService.fetchConfigurations();
+            if (response.success) {
+                this.headers = response.data.headers;
+                this.configurations = response.data.configurations;
             }
+            else {
+                this.toast.error(response.message);
+            }
+            this.headers = response.data.headers;
+            this.configurations = response.data.configurations;
         },
         async editConfig(config) {
-            try {
-                await this.sendRequest('PUT', '/' + config.parameterKey, config)
-
+            const response = await ConfigurationsService.editConfig(config);
+            if (response.success) {
                 const updatedConfigIndex = this.configurations.indexOf(config);
                 this.configurations[updatedConfigIndex].value = config.value;
                 this.configurations[updatedConfigIndex].type = config.type;
@@ -103,26 +104,24 @@ export default {
                 this.toast.success('Configuration updated successfully!');
 
                 await this.fetchJson(false);
-            } catch (error) {
-                console.error("An error occurred:", error);
-                this.toast.error('An error occurred while updating configuration!')
+            }
+            else {
+                this.toast.error(response.message);
             }
             this.chosenConfig = null;
         },
         async deleteConfig(config) {
-            try {
-                await this.sendRequest('DELETE', '/' + config.parameterKey, null);
-
-                this.configurations = this.configurations.filter(c => c.parameterKey !== config.parameterKey);
+            const response = await ConfigurationsService.deleteConfig(config);
+            if (response.success) {
+                const deletedConfigIndex = this.configurations.indexOf(config);
+                this.configurations.splice(deletedConfigIndex, 1);
 
                 this.toast.success('Configuration deleted successfully!');
 
-
-
                 await this.fetchJson(false);
-            } catch (error) {
-                console.error("An error occurred:", error);
-                this.toast.error('An error occurred while deleting configuration!')
+            }
+            else {
+                this.toast.error(response.message);
             }
             this.chosenConfig = null;
         },
@@ -132,60 +131,29 @@ export default {
                 if (!this.showJson) return;
             }
 
-            try {
-                const response = await this.sendRequest('GET', '/json', null);
+            const response = await ConfigurationsService.fetchJson();
 
-                this.json = JSON.stringify(response.data.data, null, 4);
+            if (response.success) {
+                this.json = JSON.stringify(response.data, null, 4);
                 this.$nextTick(() => {
                     Prism.highlightAll();
                 });
-            } catch (error) {
-                console.error("An error occurred:", error);
-                this.toast.error('An error occurred while fetching JSON preview!')
+            }
+            else {
+                this.toast.error(response.message);
             }
         },
         async addConfig(newConfig) {
-            if (!newConfig.parameterKey || !newConfig.value || !newConfig.type || !newConfig.description) {
-                this.toast.warning('All fields are required!');
-                return;
-            }
-
-            if (!isStringSnakeCase(newConfig.parameterKey)) {
-                this.toast.warning('Parameter key must be in snake_case!');
-                return;
-            }
-
-            try {
-                const response = await this.sendRequest('POST', '', newConfig);
-
-                console.log(response.data.data)
-                this.configurations.push(response.data.data);
+            const response = await ConfigurationsService.addConfig(newConfig);
+            if (response.success) {
+                this.configurations.push(response.data);
 
                 this.toast.success('Configuration added successfully!');
 
                 await this.fetchJson(false);
-            } catch (error) {
-                console.error("An error occurred:", error);
-                this.toast.error(error.response.data.message);
             }
-        },
-        async sendRequest(method, extraUrl, data) {
-            const url = this.API_URL + '/configurations' + extraUrl;
-            const token = await this.authService.getToken();
-            const headers = {
-                headers: {
-                    'Authorization': 'Bearer ' + token,
-                }
-            }
-            switch (method) {
-                case 'GET':
-                    return await axios.get(url, headers)
-                case 'POST':
-                    return await axios.post(url, data, headers)
-                case 'PUT':
-                    return await axios.put(url, data, headers)
-                case 'DELETE':
-                    return await axios.delete(url, headers)
+            else {
+                this.toast.error(response.message);
             }
         },
         signout() {
