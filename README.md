@@ -43,6 +43,7 @@ Login information
 <img src="https://imgur.com/lFTVvmY.jpeg" width="600"/>
 
 ### Mobile
+The black areas on the left screenshot are there due to the PNG merging tool.
 <img src="https://imgur.com/Uvl55RZ.jpeg" width="600"/>
 
 
